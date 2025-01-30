@@ -1,8 +1,8 @@
 import signUpRouter from './routers/signUpRouter.mjs';
+import prisma from './db/prisma.mjs';
 
 import express from 'express';
 import session from 'express-session';
-import { PrismaClient } from '@prisma/client';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import 'dotenv/config';
 
@@ -10,7 +10,6 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
-const prisma = new PrismaClient();
 
 app.use(
   session({
