@@ -1,3 +1,5 @@
+import signUpRouter from './routers/signUpRouter.mjs';
+
 import express from 'express';
 import session from 'express-session';
 import { PrismaClient } from '@prisma/client';
@@ -25,6 +27,8 @@ app.use(
     }),
   }),
 );
+
+app.use('/sign-up', signUpRouter);
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Index' });
