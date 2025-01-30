@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <h1>Sign Up</h1>
+    <form action="/sign-up" method="post">
+      <label>
+        Email:
+        <input type="email" name="email" required />
+      </label>
+      <label>
+        Password:
+        <input type="password" name="password" required />
+      </label>
+      <label>
+        Confirm password:
+        <input type="password" name="confirm_password" />
+      </label>
+      <button type="submit">Sign Up</button>
+    </form>
+  </body>
+</html>
