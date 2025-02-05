@@ -36,7 +36,7 @@ app.use('/sign-up', signUpRouter);
 app.use('/account', accountRouter);
 
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Index' });
+  res.render('index', { title: 'Index', name: req?.user?.email || 'world' });
 });
 
 app.listen(process.env.PORT, () =>
