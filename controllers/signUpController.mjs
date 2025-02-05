@@ -1,4 +1,5 @@
 import prisma from '../db/prisma.mjs';
+import bcryptjs from 'bcryptjs';
 
 function getSignUp(req, res, next) {
   res.render('sign-up/sign-up', {
@@ -33,10 +34,11 @@ async function postSignUp(req, res, next) {
     if (error) next(error);
     // Make sure all this stuff, and all redirects occur after the session has been saved.
     if (!existing && password === confirm_password) {
+      const hash = await bcryptjs.hash(password, 10);
       await prisma.user.create({
         data: {
           email,
-          password,
+          password: hash,
         },
       });
       // If successful, redirect to success page.
