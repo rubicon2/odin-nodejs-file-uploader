@@ -29,9 +29,9 @@ function clearRouteData(req, res, next) {
   delete req.session.errors;
   req.session.save((error) => {
     if (error) next(error);
+    // Clear route data should come after the response has been sent and the last in the middleware chain.
+    res.end();
   });
-  // Clear route data should come after the response has been sent and the last in the middleware chain.
-  res.end();
 }
 
 export { storeFormData, storePassportErrors, clearRouteData };
