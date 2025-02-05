@@ -2,7 +2,8 @@
 <html lang="en">
   <%- include('partials/head.ejs') %>
   <body>
-    <h1>Hello, <%= name %></h1>
+    <%- include('partials/nav.ejs') %>
+    <h1>Hello, <%= locals.user ? user.email : 'world' %></h1>
     <form action="/account/log-out" method="post">
       <button type="submit">Log Out</button>
     </form>
