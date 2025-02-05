@@ -4,8 +4,5 @@
   <body>
     <%- include('partials/nav.ejs') %>
     <h1>Hello, <%= locals.user ? user.email : 'world' %></h1>
-    <form action="/account/log-out" method="post">
-      <button type="submit">Log Out</button>
-    </form>
   </body>
 </html>
