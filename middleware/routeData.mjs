@@ -20,7 +20,6 @@ function storePassportErrors(req, res, next) {
   // Store as obj with form paths so can map errors to offending inputs, but also array for convenience, e.g. making a list.
   req.session.errors = { ...obj, array };
   delete req.session.messages;
-  req.session.save();
   next();
 }
 
