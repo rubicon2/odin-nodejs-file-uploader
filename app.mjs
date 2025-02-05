@@ -1,5 +1,5 @@
 import signUpRouter from './routers/signUpRouter.mjs';
-import logInRouter from './routers/logInRouter.mjs';
+import accountRouter from './routers/accountRouter.mjs';
 import prisma from './db/prisma.mjs';
 import passportInit from './middleware/passport.mjs';
 
@@ -33,7 +33,7 @@ const passport = passportInit();
 app.use(passport.session());
 
 app.use('/sign-up', signUpRouter);
-app.use('/log-in', logInRouter);
+app.use('/account', accountRouter);
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Index' });

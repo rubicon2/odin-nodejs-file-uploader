@@ -3,7 +3,7 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <h1>Log In</h1>
-      <form action="/log-in" method="post">
+      <form action="/account/log-in" method="post">
         <label>
           Email:
           <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" />

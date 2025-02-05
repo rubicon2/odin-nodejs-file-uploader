@@ -1,5 +1,5 @@
 function getLogIn(req, res, next) {
-  res.render('log-in/log-in', {
+  res.render('account/log-in', {
     title: 'Log In',
     formData: req.session.formData,
     errors: req.session.errors,

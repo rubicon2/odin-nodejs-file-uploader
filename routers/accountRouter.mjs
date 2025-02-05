@@ -1,4 +1,4 @@
-import * as logInController from '../controllers/logInController.mjs';
+import * as accountController from '../controllers/accountController.mjs';
 import * as routeData from '../middleware/routeData.mjs';
 import { Router } from 'express';
 import passport from 'passport';
@@ -6,19 +6,25 @@ import passport from 'passport';
 const router = Router();
 
 router.get(
-  '/',
+  '/log-in',
   routeData.storePassportErrors,
-  logInController.getLogIn,
+  accountController.getLogIn,
   routeData.clearRouteData,
 );
 router.post(
-  '/',
+  '/log-in',
   routeData.storeFormData,
   passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/log-in',
+    failureRedirect: '/account/log-in',
     failureMessage: true,
   }),
 );
+router.post('/log-out', (req, res, next) => {
+  req.logOut((error) => {
+    if (error) return next(error);
+    res.redirect('/');
+  });
+});
 
 export default router;
