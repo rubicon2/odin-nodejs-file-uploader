@@ -43,6 +43,10 @@ app.use((req, res) => {
   res.render('404', { title: 'Page not found', user: req.user });
 });
 
+app.use((error, req, res, next) => {
+  res.render('error', { title: 'Error', user: req.user, error });
+});
+
 app.listen(process.env.PORT, () =>
   console.log('Listening on', process.env.PORT),
 );
