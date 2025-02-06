@@ -1,7 +1,19 @@
 import prisma from '../db/prisma.mjs';
 
 async function getFolder(req, res, next) {
-  res.send('Some folder');
+  try {
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: parseInt(req.params.folderId),
+      },
+      include: {
+        children: true,
+      },
+    });
+    res.render('folder/folder', { title: folder.name, user: req.user, folder });
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function postNewFolder(req, res, next) {
@@ -10,7 +22,7 @@ async function postNewFolder(req, res, next) {
       data: {
         name: req.body.name,
         ownerId: req.user.id,
-        parentId: req?.params?.folderId || null,
+        parentId: parseInt(req?.params?.folderId) || null,
       },
     });
     res.redirect('/');
