@@ -11,7 +11,8 @@ import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import 'dotenv/config';
 
 const app = express();
-app.use(express.static('public'));
+app.use('/public', express.static('public'));
+app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 
