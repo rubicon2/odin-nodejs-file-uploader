@@ -13,6 +13,7 @@ const upload = multer({
     filename: (req, file, done) => {
       const uniquePrefix = Date.now() + '-' + Math.round(Math.random() * 1e9);
       // How to get file extension without messing with file names that have dots in?
+      // This name is just for storage. The name the user sees will be stored on the db with this url.
       done(null, uniquePrefix + '-' + file.originalname);
     },
   }),
