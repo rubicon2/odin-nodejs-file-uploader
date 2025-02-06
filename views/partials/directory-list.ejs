@@ -1,0 +1,20 @@
+<% if (locals.folders) { %>
+  <ul>
+    <% for (const folder of folders) { %>
+      <li>
+        <a href="/folder/<%= folder.id %>">
+          <%= folder.name %>
+        </a>
+      </li>
+    <% }; %>
+    <% if (locals.files) { %>
+      <% for (const file of files) { %>
+        <li>
+          <a href="<%= file.url %>">
+            <%= file.name %>
+          </a>
+        </li>
+      <% }; %>
+    <% }; %>
+  </ul>
+<% }; %>

@@ -11,17 +11,6 @@
       </label>
       <button type="submit">Create Folder</button>
     </form>
-    <% if (locals.folders) { %>
-      <ul>
-      <% for (const folder of folders) { %>
-        <li><a href="/folder/<%= folder.id %>"><%= folder.name %></a></li>
-      <% }; %>
-      <% if (locals.files) { %>
-        <% for (const file of files) { %>
-          <li><a href="<%= file.url %>"><%= file.name %></a></li>
-        <% }; %>
-      <% }; %>
-      </ul>
-    <% }; %>
+    <%- include('partials/directory-list.ejs') %>
   </body>
 </html>
