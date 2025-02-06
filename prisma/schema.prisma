@@ -34,9 +34,9 @@ model Folder {
   id       Int      @id @default(autoincrement())
   name     String   @db.VarChar(255)
   ownerId  Int
-  owner    User     @relation(fields: [ownerId], references: [id])
+  owner    User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   parentId Int?
-  parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id])
+  parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id], onDelete: Cascade)
   children Folder[] @relation("FolderChildren")
   files    File[]
 
@@ -50,9 +50,9 @@ model File {
   url       String
   name      String
   ownerId   Int
-  owner     User     @relation(fields: [ownerId], references: [id])
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   folderId  Int?
-  folder    Folder?  @relation(fields: [folderId], references: [id])
+  folder    Folder?  @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
   @@unique([url, folderId])
 }
