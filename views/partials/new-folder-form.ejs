@@ -1,0 +1,7 @@
+<form action="/folder/<%= locals.folder ? folder.id + '/' : '' %>new" method="post">
+  <label>
+    Name:
+    <input type="text" name="name" required>
+  </label>
+  <button type="submit">Create Folder</button>
+</form>

@@ -4,13 +4,7 @@
   <body>
     <%- include('partials/nav.ejs') %>
     <h1>Hello, <%= locals.user ? user.email : 'world' %></h1>
-    <form action="/folder/new" method="post">
-      <label>
-        Name:
-        <input type="text" name="name" required>
-      </label>
-      <button type="submit">Create Folder</button>
-    </form>
+    <%- include('partials/new-folder-form.ejs') %>
     <%- include('partials/directory-list.ejs') %>
   </body>
 </html>
