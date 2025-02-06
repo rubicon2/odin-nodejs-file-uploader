@@ -26,4 +26,33 @@ model User {
   updatedAt DateTime @updatedAt
   email     String   @unique
   password  String
+  folders   Folder[]
+  files     File[]
+}
+
+model Folder {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(255)
+  ownerId  Int
+  owner    User     @relation(fields: [ownerId], references: [id])
+  parentId Int?
+  parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id])
+  children Folder[] @relation("FolderChildren")
+  files    File[]
+
+  @@unique([name, parentId])
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  url       String
+  name      String
+  ownerId   Int
+  owner     User     @relation(fields: [ownerId], references: [id])
+  folderId  Int?
+  folder    Folder?  @relation(fields: [folderId], references: [id])
+
+  @@unique([url, folderId])
 }
