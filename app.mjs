@@ -40,8 +40,48 @@ app.use('/account', accountRouter);
 app.use('/file', fileRouter);
 app.use('/folder', folderRouter);
 
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Index', user: req.user });
+app.get('/', async (req, res, next) => {
+  try {
+    let files = [];
+    let folders = [];
+    if (req.user) {
+      const filePromise = prisma.file.findMany({
+        where: {
+          AND: [
+            {
+              ownerId: req.user.id,
+            },
+            {
+              folderId: null,
+            },
+          ],
+        },
+      });
+
+      const folderPromise = prisma.folder.findMany({
+        where: {
+          AND: [
+            {
+              ownerId: req.user.id,
+            },
+            {
+              parentId: null,
+            },
+          ],
+        },
+        include: {
+          children: true,
+        },
+      });
+
+      files = await filePromise;
+      folders = await folderPromise;
+    }
+
+    res.render('index', { title: 'Index', user: req.user, files, folders });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.use((req, res) => {

@@ -4,5 +4,24 @@
   <body>
     <%- include('partials/nav.ejs') %>
     <h1>Hello, <%= locals.user ? user.email : 'world' %></h1>
+    <form action="/folder/new" method="post">
+      <label>
+        Name:
+        <input type="text" name="name" required>
+      </label>
+      <button type="submit">Create Folder</button>
+    </form>
+    <% if (locals.folders) { %>
+      <ul>
+      <% for (const folder of folders) { %>
+        <li><a href="/folder/<%= folder.id %>"><%= folder.name %></a></li>
+      <% }; %>
+      <% if (locals.files) { %>
+        <% for (const file of files) { %>
+          <li><a href="<%= file.url %>"><%= file.name %></a></li>
+        <% }; %>
+      <% }; %>
+      </ul>
+    <% }; %>
   </body>
 </html>
