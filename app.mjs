@@ -1,6 +1,7 @@
 import signUpRouter from './routers/signUpRouter.mjs';
 import accountRouter from './routers/accountRouter.mjs';
 import fileRouter from './routers/fileRouter.mjs';
+import folderRouter from './routers/folderRouter.mjs';
 import prisma from './db/prisma.mjs';
 import passportInit from './middleware/passport.mjs';
 
@@ -36,6 +37,7 @@ app.use(passport.session());
 app.use('/sign-up', signUpRouter);
 app.use('/account', accountRouter);
 app.use('/file', fileRouter);
+app.use('/folder', folderRouter);
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Index', user: req.user });
