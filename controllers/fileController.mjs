@@ -18,13 +18,14 @@ async function getUpload(req, res, next) {
 // These are ambiguously named, think of better names.
 async function getDownload(req, res, next) {
   try {
-    const { url, name } = await prisma.file.findUnique({
+    const file = await prisma.file.findUnique({
       where: {
         id: req.params.id,
         ownerId: req.user.id,
       },
     });
-    if (!url) throw new Error('File not found');
+    if (!file) throw new Error('File not found');
+    const { url, name } = file;
     res.download(url, name);
   } catch (error) {
     next(error);
