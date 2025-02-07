@@ -49,6 +49,7 @@ model File {
   updatedAt DateTime @updatedAt
   url       String
   name      String
+  size      Int
   ownerId   String
   owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   folderId  String?

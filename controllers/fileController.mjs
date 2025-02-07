@@ -9,6 +9,7 @@ async function postUpload(req, res, next) {
         folderId,
         url: req.file.path,
         name: req.file.originalname,
+        size: req.file.size,
       },
     });
     if (folderId) res.redirect(`/folder/${folderId}`);
