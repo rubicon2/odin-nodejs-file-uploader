@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <% if (folder.parentId) { %>
+      <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
+    <% } else { %>
+      <a href="/">Back to root directory</a>
+    <% }; %>
+    <h1><%= folder.name %></h1>
+    <%- include('../partials/update-folder-form.ejs') %>
+    <%- include('../partials/delete-folder-form.ejs') %>
+    <%- include('../partials/new-folder-form.ejs') %>
+    <%- include('../partials/file-upload-form.ejs') %>
+    <%- include('../partials/directory-list.ejs', { folders: folder.children, files: folder.files }) %>
+  </body>
+</html>

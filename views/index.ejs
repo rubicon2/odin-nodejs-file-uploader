@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head.ejs') %>
+  <body>
+    <%- include('partials/nav.ejs') %>
+    <h1>Hello, <%= locals.user ? user.email : 'world' %></h1>
+    <% if (locals.user) { %>
+      <%- include('partials/new-folder-form.ejs') %>
+      <%- include('partials/file-upload-form.ejs') %>
+      <%- include('partials/directory-list.ejs') %>
+    <% } else { %>
+      <p>Sign up or log in to start uploading files!</p>
+    <% }; %>
+  </body>
+</html>

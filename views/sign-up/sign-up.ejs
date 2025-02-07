@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <h1>Sign Up</h1>
+    <form action="/sign-up" method="post">
+      <label>
+        Email:
+        <input type="email" name="email" required value="<%= locals.formData?.email ? formData.email : '' %>"/>
+        <div id="form-error--email"><%= locals.errors?.email ? errors.email : '' %></div>
+      </label>
+      <label>
+        Password:
+        <input type="password" name="password" required value="<%= locals.formData?.password ? formData.password : '' %>"/>
+        <div id="form-error--password"><%= locals.errors?.password ? errors.password : '' %></div>
+      </label>
+      <label>
+        Confirm password:
+        <input type="password" name="confirm_password" value="<%= locals.formData?.confirm_password ? formData.confirm_password : '' %>"/>
+        <div id="form-error--confirm-password"><%= locals.errors?.confirm_password ? errors.confirm_password : '' %></div>
+      </label>
+      <button type="submit">Sign Up</button>
+    </form>
+  </body>
+</html>
