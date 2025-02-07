@@ -4,7 +4,7 @@ async function getFolder(req, res, next) {
   try {
     const folder = await prisma.folder.findUnique({
       where: {
-        id: parseInt(req.params.folderId),
+        id: req.params.folderId,
       },
       include: {
         children: true,
@@ -18,7 +18,7 @@ async function getFolder(req, res, next) {
 
 async function postNewFolder(req, res, next) {
   try {
-    const parentId = parseInt(req?.params?.folderId) || null;
+    const parentId = req?.params?.folderId || null;
     await prisma.folder.create({
       data: {
         name: req.body.name,
@@ -40,7 +40,7 @@ async function postUpdateFolder(req, res, next) {
   try {
     await prisma.folder.update({
       where: {
-        id: parseInt(req.params.folderId),
+        id: req.params.folderId,
       },
       data: {
         name: req.body.name,
@@ -57,7 +57,7 @@ async function postDeleteFolder(req, res, next) {
     // Redirect to parent folder if there is one.
     const { parent } = await prisma.folder.findUnique({
       where: {
-        id: parseInt(req.params.folderId),
+        id: req.params.folderId,
       },
       include: {
         parent: true,
@@ -66,7 +66,7 @@ async function postDeleteFolder(req, res, next) {
 
     await prisma.folder.delete({
       where: {
-        id: parseInt(req.params.folderId),
+        id: req.params.folderId,
       },
     });
 

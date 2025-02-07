@@ -21,7 +21,7 @@ model Session {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email     String   @unique
@@ -31,11 +31,11 @@ model User {
 }
 
 model Folder {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @default(uuid())
   name     String   @db.VarChar(255)
-  ownerId  Int
+  ownerId  String
   owner    User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  parentId Int?
+  parentId String?
   parent   Folder?  @relation("FolderChildren", fields: [parentId], references: [id], onDelete: Cascade)
   children Folder[] @relation("FolderChildren")
   files    File[]
@@ -44,14 +44,14 @@ model Folder {
 }
 
 model File {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   url       String
   name      String
-  ownerId   Int
+  ownerId   String
   owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  folderId  Int?
+  folderId  String?
   folder    Folder?  @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
   @@unique([url, folderId])
