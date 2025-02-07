@@ -8,6 +8,7 @@ async function getFolder(req, res, next) {
       },
       include: {
         children: true,
+        files: true,
       },
     });
     res.render('folder/folder', { title: folder.name, user: req.user, folder });

@@ -8,6 +8,6 @@
     <%- include('../partials/delete-folder-form.ejs') %>
     <%- include('../partials/new-folder-form.ejs') %>
     <%- include('../partials/file-upload-form.ejs') %>
-    <%- include('../partials/directory-list.ejs', { folders: folder.children }) %>
+    <%- include('../partials/directory-list.ejs', { folders: folder.children, files: folder.files }) %>
   </body>
 </html>
