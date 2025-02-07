@@ -12,7 +12,6 @@ import 'dotenv/config';
 
 const app = express();
 app.use('/public', express.static('public'));
-app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
 

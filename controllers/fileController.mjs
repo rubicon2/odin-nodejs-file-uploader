@@ -1,5 +1,20 @@
 import prisma from '../db/prisma.mjs';
 
+async function getUpload(req, res, next) {
+  try {
+    const file = await prisma.file.findUnique({
+      where: {
+        id: req.params.id,
+        ownerId: req.user.id,
+      },
+    });
+    if (!file) throw new Error('File not found');
+    res.render('file/file', { title: file.name, user: req.user, file });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function postUpload(req, res, next) {
   try {
     const folderId = req?.body?.folderId || null;
@@ -19,4 +34,4 @@ async function postUpload(req, res, next) {
   }
 }
 
-export { postUpload };
+export { getUpload, postUpload };

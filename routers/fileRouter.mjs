@@ -19,6 +19,7 @@ const upload = multer({
   }),
 });
 
+router.get('/:id', isAuth, fileController.getUpload);
 router.post(
   '/upload',
   isAuth,

@@ -10,7 +10,7 @@
     <% if (locals.files) { %>
       <% for (const file of files) { %>
         <li>
-          <a href="/<%= file.url %>">
+          <a href="/file/<%= file.id %>">
             <%= file.name %>
           </a>
         </li>
