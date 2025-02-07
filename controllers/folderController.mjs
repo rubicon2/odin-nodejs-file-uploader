@@ -7,6 +7,7 @@ async function getFolder(req, res, next) {
         id: req.params.folderId,
       },
       include: {
+        parent: true,
         children: true,
         files: true,
       },
