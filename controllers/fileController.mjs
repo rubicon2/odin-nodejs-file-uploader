@@ -15,6 +15,22 @@ async function getUpload(req, res, next) {
   }
 }
 
+// These are ambiguously named, think of better names.
+async function getDownload(req, res, next) {
+  try {
+    const { url, name } = await prisma.file.findUnique({
+      where: {
+        id: req.params.id,
+        ownerId: req.user.id,
+      },
+    });
+    if (!url) throw new Error('File not found');
+    res.download(url, name);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function postUpload(req, res, next) {
   try {
     const folderId = req?.body?.folderId || null;
@@ -34,4 +50,4 @@ async function postUpload(req, res, next) {
   }
 }
 
-export { getUpload, postUpload };
+export { getUpload, getDownload, postUpload };
