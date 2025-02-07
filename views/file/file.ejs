@@ -5,6 +5,7 @@
     <%- include('../partials/nav.ejs') %>
     <h1><%= file.name %></h1>
     <h2>Created at: <%= file.createdAt %></h2>
+    <h2>Size: <%= Math.round(file.size / 1000) %> kb</h2>
     <a href="/file/<%= file.id %>/download">Download</a>
   </body>
 </html>
