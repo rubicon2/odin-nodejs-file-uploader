@@ -1,6 +1,6 @@
 import prisma from '../db/prisma.mjs';
 
-async function getUpload(req, res, next) {
+async function getFile(req, res, next) {
   try {
     const file = await prisma.file.findUnique({
       where: {
@@ -15,8 +15,7 @@ async function getUpload(req, res, next) {
   }
 }
 
-// These are ambiguously named, think of better names.
-async function getDownload(req, res, next) {
+async function downloadFile(req, res, next) {
   try {
     const file = await prisma.file.findUnique({
       where: {
@@ -32,7 +31,7 @@ async function getDownload(req, res, next) {
   }
 }
 
-async function postUpload(req, res, next) {
+async function postFile(req, res, next) {
   try {
     const folderId = req?.body?.folderId || null;
     await prisma.file.create({
@@ -51,4 +50,4 @@ async function postUpload(req, res, next) {
   }
 }
 
-export { getUpload, getDownload, postUpload };
+export { getFile, downloadFile, postFile };
