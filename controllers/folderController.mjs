@@ -18,14 +18,19 @@ async function getFolder(req, res, next) {
 
 async function postNewFolder(req, res, next) {
   try {
+    const parentId = parseInt(req?.params?.folderId) || null;
     await prisma.folder.create({
       data: {
         name: req.body.name,
         ownerId: req.user.id,
-        parentId: parseInt(req?.params?.folderId) || null,
+        parentId,
       },
     });
-    res.redirect('/');
+    if (parentId) {
+      res.redirect(`/folder/${parentId}`);
+    } else {
+      res.redirect('/');
+    }
   } catch (error) {
     next(error);
   }
@@ -49,12 +54,24 @@ async function postUpdateFolder(req, res, next) {
 
 async function postDeleteFolder(req, res, next) {
   try {
+    // Redirect to parent folder if there is one.
+    const { parent } = await prisma.folder.findUnique({
+      where: {
+        id: parseInt(req.params.folderId),
+      },
+      include: {
+        parent: true,
+      },
+    });
+
     await prisma.folder.delete({
       where: {
         id: parseInt(req.params.folderId),
       },
     });
-    res.redirect('/');
+
+    if (parent) res.redirect(`/folder/${parent.id}`);
+    else res.redirect('/');
   } catch (error) {
     next(error);
   }
