@@ -5,6 +5,7 @@ async function getFolder(req, res, next) {
     const folder = await prisma.folder.findUnique({
       where: {
         id: req.params.folderId,
+        ownerId: req.user.id,
       },
       include: {
         parent: true,
@@ -12,6 +13,7 @@ async function getFolder(req, res, next) {
         files: true,
       },
     });
+    if (!folder) throw new Error('Folder not found');
     res.render('folder/folder', { title: folder.name, user: req.user, folder });
   } catch (error) {
     next(error);
