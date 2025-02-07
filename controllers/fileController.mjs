@@ -1,11 +1,5 @@
 import prisma from '../db/prisma.mjs';
 
-function getUpload(req, res, next) {
-  res.render('file/upload.ejs', { title: 'Upload file', user: req.user });
-  // Clear route data.
-  next();
-}
-
 async function postUpload(req, res, next) {
   try {
     const folderId = req?.body?.folderId || null;
@@ -24,4 +18,4 @@ async function postUpload(req, res, next) {
   }
 }
 
-export { getUpload, postUpload };
+export { postUpload };

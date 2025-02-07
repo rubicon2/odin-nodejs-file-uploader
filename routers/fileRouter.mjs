@@ -19,12 +19,6 @@ const upload = multer({
   }),
 });
 
-router.get(
-  '/upload',
-  isAuth,
-  fileController.getUpload,
-  routeData.clearRouteData,
-);
 router.post(
   '/upload',
   isAuth,
