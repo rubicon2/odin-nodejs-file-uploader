@@ -55,5 +55,5 @@ model File {
   folderId  String?
   folder    Folder?  @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
-  @@unique([url, folderId])
+  @@unique([name, folderId])
 }

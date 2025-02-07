@@ -34,6 +34,21 @@ async function downloadFile(req, res, next) {
 async function postFile(req, res, next) {
   try {
     const folderId = req?.body?.folderId || null;
+    const existingFile = await prisma.file.findFirst({
+      where: {
+        ownerId: req.user.id,
+        folderId,
+        name: req.file.originalname,
+      },
+    });
+
+    // Cannot have 2 files with the same name in the same folder.
+    if (existingFile) {
+      throw new Error(
+        'Cannot upload two files with the same name in the same folder',
+      );
+    }
+
     await prisma.file.create({
       data: {
         ownerId: req.user.id,
