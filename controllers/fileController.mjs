@@ -8,15 +8,17 @@ function getUpload(req, res, next) {
 
 async function postUpload(req, res, next) {
   try {
+    const folderId = req?.body?.folderId || null;
     await prisma.file.create({
       data: {
         ownerId: req.user.id,
-        folderId: req?.params?.folderId || null,
+        folderId,
         url: req.file.path,
         name: req.file.originalname,
       },
     });
-    res.redirect('/file/upload');
+    if (folderId) res.redirect(`/folder/${folderId}`);
+    else res.redirect('/');
   } catch (error) {
     next(error);
   }

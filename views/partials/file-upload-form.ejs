@@ -2,6 +2,6 @@
   <label>
     File:
     <input type="file" name="file" required>
-    <button type="submit">Upload File</button>
+    <button type="submit" name="folderId" value="<%= locals.folder ? folder.id : null %>">Upload File</button>
   </label>
 </form>
