@@ -19,12 +19,14 @@ const upload = multer({
   }),
 });
 
+router.get('/:id', isAuth, fileController.getFile);
+router.get('/:id/download', isAuth, fileController.downloadFile);
 router.post(
   '/upload',
   isAuth,
   routeData.storeFormData,
   upload.single('file'),
-  fileController.postUpload,
+  fileController.postFile,
 );
 
 export default router;
