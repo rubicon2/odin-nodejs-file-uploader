@@ -8,8 +8,22 @@ async function getFile(req, res, next) {
         ownerId: req.user.id,
       },
     });
+
+    const parentFolder = !file.folderId
+      ? null
+      : await prisma.folder.findUnique({
+          where: {
+            id: file.folderId,
+          },
+        });
+
     if (!file) throw new Error('File not found');
-    res.render('file/file', { title: file.name, user: req.user, file });
+    res.render('file/file', {
+      title: file.name,
+      user: req.user,
+      file,
+      parentFolder,
+    });
   } catch (error) {
     next(error);
   }
