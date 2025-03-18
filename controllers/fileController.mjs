@@ -118,4 +118,21 @@ async function renameFile(req, res, next) {
   }
 }
 
-export { getFile, downloadFile, postFile, renameFile };
+async function deleteFile(req, res, next) {
+  try {
+    const file = await prisma.file.delete({
+      where: {
+        id: req.params.fileId,
+      },
+    });
+    if (file.folderId) {
+      res.redirect(`/folder/${file.folderId}`);
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {
+    return next(error);
+  }
+}
+
+export { getFile, downloadFile, postFile, renameFile, deleteFile };

@@ -36,5 +36,6 @@ router.post(
   routeData.storeFormData,
   fileController.renameFile,
 );
+router.post('/:fileId/delete', isAuth, fileController.deleteFile);
 
 export default router;
