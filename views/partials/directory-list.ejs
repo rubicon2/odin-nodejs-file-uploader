@@ -13,6 +13,7 @@
           <a href="/file/<%= file.id %>">
             <%= file.name %>
           </a>
+          <%- include('../file/delete-file-form.ejs', { file }) %>
         </li>
       <% }; %>
     <% }; %>
