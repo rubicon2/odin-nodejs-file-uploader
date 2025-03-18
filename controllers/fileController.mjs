@@ -79,4 +79,60 @@ async function postFile(req, res, next) {
   }
 }
 
-export { getFile, downloadFile, postFile };
+async function renameFile(req, res, next) {
+  try {
+    const { fileId } = req.params;
+    const { name } = req.body;
+    // Make sure no file in this folder already has that name.
+    const existingFileWithName = await prisma.file.findFirst({
+      where: {
+        AND: [
+          {
+            name,
+          },
+          {
+            id: {
+              not: fileId,
+            },
+          },
+        ],
+      },
+    });
+
+    if (existingFileWithName) {
+      throw new Error('A file with that name already exists in this folder');
+    }
+
+    // Otherwise, we are ok to update to the new name.
+    await prisma.file.update({
+      where: {
+        id: fileId,
+      },
+      data: {
+        name,
+      },
+    });
+    res.redirect(`/file/${fileId}`);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function deleteFile(req, res, next) {
+  try {
+    const file = await prisma.file.delete({
+      where: {
+        id: req.params.fileId,
+      },
+    });
+    if (file.folderId) {
+      res.redirect(`/folder/${file.folderId}`);
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {
+    return next(error);
+  }
+}
+
+export { getFile, downloadFile, postFile, renameFile, deleteFile };

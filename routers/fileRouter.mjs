@@ -30,5 +30,12 @@ router.post(
   upload.single('file'),
   fileController.postFile,
 );
+router.post(
+  '/:fileId/update',
+  isAuth,
+  routeData.storeFormData,
+  fileController.renameFile,
+);
+router.post('/:fileId/delete', isAuth, fileController.deleteFile);
 
 export default router;
