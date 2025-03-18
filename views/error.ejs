@@ -3,7 +3,13 @@
 <%- include('partials/head.ejs') %>
   <body>
     <%- include('partials/nav.ejs') %>
-      <h1><%= error.message %></h1>
-      <p><%= error.stack %></p>
+    <main class="container">
+      <h1>
+        <%= error.message %>
+      </h1>
+      <p>
+        <%= error.stack %>
+      </p>
+    </main>
   </body>
 </html>

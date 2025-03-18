@@ -11,4 +11,10 @@ h6 {
   font-family: "Oswald", Arial, Helvetica, sans-serif;
 }
 
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 /*# sourceMappingURL=style.css.map */

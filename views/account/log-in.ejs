@@ -3,7 +3,8 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <h1>Log In</h1>
+    <main class="container">
+      <h1>Log In</h1>
       <form action="/account/log-in" method="post">
         <label>
           Email:
@@ -21,5 +22,6 @@
         </label>
         <button type="submit">Log In</button>
       </form>
+    </main>
   </body>
 </html>
