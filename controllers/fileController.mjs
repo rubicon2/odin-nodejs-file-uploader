@@ -4,7 +4,7 @@ async function getFile(req, res, next) {
   try {
     const file = await prisma.file.findUnique({
       where: {
-        id: req.params.id,
+        id: req.params.fileId,
         ownerId: req.user.id,
       },
     });
@@ -33,7 +33,7 @@ async function downloadFile(req, res, next) {
   try {
     const file = await prisma.file.findUnique({
       where: {
-        id: req.params.id,
+        id: req.params.fileId,
         ownerId: req.user.id,
       },
     });
