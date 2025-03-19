@@ -1,5 +1,25 @@
-:root {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+.list-no-style {
+  list-style: none;
+  padding: 0;
+}
+
+.link-no-style {
+  text-decoration: none;
+}
+
+.button-no-style {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.flex-h {
+  display: flex;
+}
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -9,6 +29,21 @@ h4,
 h5,
 h6 {
   font-family: "Oswald", Arial, Helvetica, sans-serif;
+  line-height: 1;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+button {
+  cursor: pointer;
+}
+
+:root {
+  --main-color: #4455ee;
+  --off-white: #eeeeee;
+  --off-black: #222222;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  color: var(--off-black);
 }
 
 .container {
