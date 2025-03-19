@@ -52,4 +52,33 @@ button {
   padding: 0 1rem;
 }
 
+.main-nav-background {
+  background-color: var(--main-color);
+}
+
+.main-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem;
+  gap: 1rem;
+  align-items: center;
+}
+.main-nav a,
+.main-nav button {
+  color: var(--off-white);
+}
+
+.nav-link {
+  font-weight: 700;
+}
+.nav-link:hover {
+  filter: brightness(0.75);
+}
+
+@media screen and (min-width: 460px) {
+  .main-nav {
+    flex-direction: row;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

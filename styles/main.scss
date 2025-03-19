@@ -18,3 +18,36 @@ $desktop-breakpoint: 460px;
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+// Styles for specific components.
+.main-nav-background {
+  background-color: var(--main-color);
+}
+
+.main-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem;
+  gap: 1rem;
+  align-items: center;
+
+  a,
+  button {
+    color: var(--off-white);
+  }
+}
+
+// This needs to be after main-nav so the color had be changed upon hover.
+.nav-link {
+  font-weight: 700;
+
+  &:hover {
+    filter: brightness(0.75);
+  }
+}
+
+@media screen and (min-width: $desktop-breakpoint) {
+  .main-nav {
+    flex-direction: row;
+  }
+}
