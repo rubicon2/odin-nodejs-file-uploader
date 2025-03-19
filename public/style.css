@@ -41,7 +41,9 @@ button {
 :root {
   --main-color: #4455ee;
   --off-white: #eeeeee;
+  --grey: #aaaaaa55;
   --off-black: #222222;
+  --shadow: #22222211;
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   color: var(--off-black);
 }
@@ -84,17 +86,30 @@ button {
 .directory-list__folder,
 .directory-list__file {
   display: grid;
-  justify-content: center;
-  border: 1px dotted red;
-}
-.directory-list__folder a,
-.directory-list__file a {
-  background-color: pink;
+  text-align: center;
 }
 
-.directory-list__folder__buttons {
+.directory-list__item {
+  border: 3px solid var(--grey);
+  border-radius: 5px;
+  padding: 1rem;
+  box-shadow: 5px 5px 5px 5px var(--shadow);
+}
+
+.directory-list__folder__buttons,
+.directory-list__file__buttons {
   display: flex;
+  justify-content: right;
   align-items: center;
+}
+
+.directory-list__item-icon-container {
+  display: grid;
+  justify-content: center;
+}
+
+.directory-list__item-icon {
+  width: 100px;
 }
 
 @media screen and (min-width: 460px) {
