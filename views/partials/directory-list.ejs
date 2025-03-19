@@ -1,9 +1,11 @@
 <% if ((locals.folders && folders.length > 0) || (locals.files && files.length > 0)) { %>
   <ul class="list-no-style directory-list">
-    <% for (const folder of folders) { %>
-      <%- include('directory-list-folder.ejs', { folder }) %>
+    <% if (locals.folders && folders.length > 0) { %>
+      <% for (const folder of folders) { %>
+        <%- include('directory-list-folder.ejs', { folder }) %>
+      <% }; %>
     <% }; %>
-    <% if (locals.files) { %>
+    <% if (locals.files && files.length > 0) { %>
       <% for (const file of files) { %>
         <li>
           <a href="/file/<%= file.id %>">
