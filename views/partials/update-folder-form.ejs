@@ -1,7 +1,7 @@
 <form action="/folder/<%= locals.folder ? folder.id + '/' : '' %>update" method="post">
   <label>
     Name:
-    <input type="text" name="name">
+    <input type="text" name="name" value="<%= folder.name %>" required>
   </label>
-  <button type="submit">Update Folder</button>
+  <button type="submit">Rename Folder</button>
 </form>

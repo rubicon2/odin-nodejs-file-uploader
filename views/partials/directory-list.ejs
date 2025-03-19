@@ -1,11 +1,7 @@
 <% if (locals.folders) { %>
-  <ul>
+  <ul class="list-no-style directory-list">
     <% for (const folder of folders) { %>
-      <li>
-        <a href="/folder/<%= folder.id %>">
-          <%= folder.name %>
-        </a>
-      </li>
+      <%- include('directory-list-folder.ejs', { folder }) %>
     <% }; %>
     <% if (locals.files) { %>
       <% for (const file of files) { %>

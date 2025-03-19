@@ -75,6 +75,28 @@ button {
   filter: brightness(0.75);
 }
 
+.directory-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.directory-list__folder,
+.directory-list__file {
+  display: grid;
+  justify-content: center;
+  border: 1px dotted red;
+}
+.directory-list__folder a,
+.directory-list__file a {
+  background-color: pink;
+}
+
+.directory-list__folder__buttons {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (min-width: 460px) {
   .main-nav {
     flex-direction: row;

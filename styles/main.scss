@@ -46,6 +46,30 @@ $desktop-breakpoint: 460px;
   }
 }
 
+.directory-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.directory-list__folder,
+.directory-list__file {
+  display: grid;
+  // place-items: center;
+  // text-align: center;
+  justify-content: center;
+  border: 1px dotted red;
+
+  a {
+    background-color: pink;
+  }
+}
+
+.directory-list__folder__buttons {
+  display: flex;
+  align-items: center;
+}
+
 @media screen and (min-width: $desktop-breakpoint) {
   .main-nav {
     flex-direction: row;

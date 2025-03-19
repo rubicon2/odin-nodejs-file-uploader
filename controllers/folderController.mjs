@@ -20,6 +20,24 @@ async function getFolder(req, res, next) {
   }
 }
 
+async function getUpdateFolder(req, res, next) {
+  try {
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: req.params.folderId,
+        ownerId: req.user.id,
+      },
+      include: {
+        parent: true,
+      },
+    });
+    if (!folder) throw new Error('Folder not found');
+    res.render('folder/update', { title: folder.name, user: req.user, folder });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 async function postNewFolder(req, res, next) {
   try {
     const parentId = req?.params?.folderId || null;
@@ -42,7 +60,7 @@ async function postNewFolder(req, res, next) {
 
 async function postUpdateFolder(req, res, next) {
   try {
-    await prisma.folder.update({
+    const folder = await prisma.folder.update({
       where: {
         id: req.params.folderId,
       },
@@ -50,7 +68,9 @@ async function postUpdateFolder(req, res, next) {
         name: req.body.name,
       },
     });
-    res.redirect(`/folder/${req.params.folderId}`);
+
+    if (folder.parentId) res.redirect(`/folder/${folder.parentId}`);
+    else res.redirect('/');
   } catch (error) {
     next(error);
   }
@@ -81,4 +101,10 @@ async function postDeleteFolder(req, res, next) {
   }
 }
 
-export { getFolder, postNewFolder, postUpdateFolder, postDeleteFolder };
+export {
+  getFolder,
+  getUpdateFolder,
+  postNewFolder,
+  postUpdateFolder,
+  postDeleteFolder,
+};

@@ -5,8 +5,10 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.post('/new', isAuth, folderController.postNewFolder);
 router.get('/:folderId', isAuth, folderController.getFolder);
+router.get('/:folderId/update', isAuth, folderController.getUpdateFolder);
+
+router.post('/new', isAuth, folderController.postNewFolder);
 router.post('/:folderId/new', isAuth, folderController.postNewFolder);
 router.post('/:folderId/update', isAuth, folderController.postUpdateFolder);
 router.post('/:folderId/delete', isAuth, folderController.postDeleteFolder);
