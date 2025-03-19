@@ -1,4 +1,4 @@
-<% if (locals.folders) { %>
+<% if ((locals.folders && folders.length > 0) || (locals.files && files.length > 0)) { %>
   <ul class="list-no-style directory-list">
     <% for (const folder of folders) { %>
       <%- include('directory-list-folder.ejs', { folder }) %>
@@ -14,4 +14,6 @@
       <% }; %>
     <% }; %>
   </ul>
+<% } else { %>
+  <p>This folder is empty.</p>
 <% }; %>
