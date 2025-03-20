@@ -9,8 +9,16 @@ async function getFolder(req, res, next) {
       },
       include: {
         parent: true,
-        children: true,
-        files: true,
+        children: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
+        files: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
       },
     });
     if (!folder) throw new Error('Folder not found');

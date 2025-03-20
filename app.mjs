@@ -55,6 +55,9 @@ app.get('/', async (req, res, next) => {
             },
           ],
         },
+        orderBy: {
+          name: 'asc',
+        },
       });
 
       const folderPromise = prisma.folder.findMany({
@@ -70,6 +73,9 @@ app.get('/', async (req, res, next) => {
         },
         include: {
           children: true,
+        },
+        orderBy: {
+          name: 'asc',
         },
       });
 
