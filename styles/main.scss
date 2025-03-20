@@ -67,6 +67,15 @@ $desktop-breakpoint: 460px;
   border-radius: var(--std-border-radius);
   padding: 1rem;
   box-shadow: 5px 5px 5px 5px var(--shadow);
+
+  button,
+  .directory-list__item-icon-container {
+    transition: background-color 0.1s ease-in-out;
+    border-radius: var(--std-border-radius);
+    &:hover {
+      background-color: var(--grey);
+    }
+  }
 }
 
 .directory-list__folder__buttons,
