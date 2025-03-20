@@ -7,12 +7,7 @@
     <% }; %>
     <% if (locals.files && files.length > 0) { %>
       <% for (const file of files) { %>
-        <li>
-          <a href="/file/<%= file.id %>">
-            <%= file.name %>
-          </a>
-          <%- include('../file/delete-file-form.ejs', { file }) %>
-        </li>
+        <%- include('directory-list-file.ejs', { file }) %>
       <% }; %>
     <% }; %>
   </ul>
