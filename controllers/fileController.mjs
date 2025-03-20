@@ -29,6 +29,24 @@ async function getFile(req, res, next) {
   }
 }
 
+async function getUpdateFile(req, res, next) {
+  try {
+    const file = await prisma.file.findUnique({
+      where: {
+        id: req.params.fileId,
+        ownerId: req.user.id,
+      },
+      include: {
+        folder: true,
+      },
+    });
+    if (!file) throw new Error('File not found');
+    res.render('file/update', { title: file.name, user: req.user, file });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 async function downloadFile(req, res, next) {
   try {
     const file = await prisma.file.findUnique({
@@ -135,4 +153,11 @@ async function deleteFile(req, res, next) {
   }
 }
 
-export { getFile, downloadFile, postFile, renameFile, deleteFile };
+export {
+  getFile,
+  getUpdateFile,
+  downloadFile,
+  postFile,
+  renameFile,
+  deleteFile,
+};

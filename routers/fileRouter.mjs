@@ -22,6 +22,7 @@ const upload = multer({
 });
 
 router.get('/:fileId', isAuth, fileController.getFile);
+router.get('/:fileId/update', isAuth, fileController.getUpdateFile);
 router.get('/:fileId/download', isAuth, fileController.downloadFile);
 router.post(
   '/upload',

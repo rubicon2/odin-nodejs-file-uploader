@@ -1,0 +1,7 @@
+<form action="/file/<%= locals.file ? file.id + '/' : '' %>update" method="post">
+  <label>
+    Name:
+    <input type="text" name="name" value="<%= file.name %>" required>
+  </label>
+  <button type="submit">Rename File</button>
+</form>
