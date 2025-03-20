@@ -56,10 +56,10 @@ $desktop-breakpoint: 460px;
   gap: 1rem;
 }
 
-.directory-list__folder,
-.directory-list__file {
+.directory-list__item-icon-container {
   display: grid;
-  text-align: center;
+  grid-template-rows: min-content 1fr;
+  justify-items: center;
 }
 
 .directory-list__item {
@@ -74,11 +74,6 @@ $desktop-breakpoint: 460px;
   display: flex;
   justify-content: right;
   align-items: center;
-}
-
-.directory-list__item-icon-container {
-  display: grid;
-  justify-content: center;
 }
 
 .directory-list__item-icon {
