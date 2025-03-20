@@ -28,6 +28,10 @@
   align-items: center;
 }
 
+.hidden {
+  display: none;
+}
+
 // This is for stylistic stuff that has no bearing on content unlike <strong> tag.
 .bold {
   font-weight: 700;
