@@ -1,0 +1,11 @@
+<header class="flex-h flex-between">
+  <h1><%= title %></h1>
+  <div class="folder__buttons flex-h">
+    <%- include('../file/upload-file-form.ejs', { folderId: (locals.folder) ? folder.id : null }) %>
+    <form action="<%= (locals.folder) ? `/folder/${folder.id}/new` : '/folder/new' %>" method="post">
+      <button type="submit" class="button-no-style std-button">
+        <img src="/public/icons/create_new_folder.svg" alt="create new folder">
+      </button>
+    </form>
+  </div>
+</header>
