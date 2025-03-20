@@ -9,8 +9,16 @@
       <% } else { %>
         <a href="/">Back to root directory</a>
       <% }; %>
-      <h1><%= folder.name %></h1>
-      <%- include('../partials/new-folder-form.ejs') %>
+      <header class="flex-h flex-between">
+        <h1><%= folder.name %></h1>
+        <div class="folder__buttons">
+          <form action="/folder/<%= folder.id %>/new" method="post">
+            <button type="submit" class="button-no-style std-button">
+              <img src="/public/icons/create_new_folder.svg" alt="create new folder">
+            </button>
+          </form>
+        </div>
+      </header>
       <%- include('../partials/file-upload-form.ejs') %>
       <%- include('../partials/directory-list.ejs', { folders: folder.children, files: folder.files }) %>
     </main>

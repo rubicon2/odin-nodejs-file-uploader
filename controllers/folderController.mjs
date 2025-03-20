@@ -48,11 +48,27 @@ async function getUpdateFolder(req, res, next) {
 
 async function postNewFolder(req, res, next) {
   try {
+    let name = req?.body?.name || 'New Folder';
+    const ownerId = req.user.id;
     const parentId = req?.params?.folderId || null;
+
+    // Check this name has not already been used by an existing folder.
+    const existingFolderWithName = await prisma.folder.findFirst({
+      where: {
+        name,
+        ownerId,
+        parentId,
+      },
+    });
+
+    if (existingFolderWithName)
+      throw new Error('A folder with that name already exists');
+
+    // If that name has not already been taken, create the new folder.
     await prisma.folder.create({
       data: {
-        name: req.body.name,
-        ownerId: req.user.id,
+        name,
+        ownerId,
         parentId,
       },
     });

@@ -51,6 +51,14 @@ $desktop-breakpoint: 460px;
   }
 }
 
+.std-button {
+  transition: background-color 0.1s ease-in-out;
+  border-radius: var(--std-border-radius);
+  &:hover {
+    background-color: var(--grey);
+  }
+}
+
 // This needs to be after main-nav so the color had be changed upon hover.
 .nav-link {
   font-weight: 700;
