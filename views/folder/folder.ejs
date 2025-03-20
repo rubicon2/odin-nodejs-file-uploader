@@ -12,14 +12,7 @@
       <header class="flex-h flex-between">
         <h1><%= folder.name %></h1>
         <div class="folder__buttons flex-h">
-          <form action="/file/upload" method="post" enctype="multipart/form-data">
-            <!-- hide file input and trigger dialog when button clicked? -->
-            <input type="file" name="file" id="file" class="hidden" required>
-            <button type="button" class="button-no-style std-button" onclick="(() => { const folderId = document.getElementById('folderId'); const fileInput = document.getElementById('file'); fileInput.click(); fileInput.addEventListener('change', () => folderId.click(), { once: true }); })()">
-              <img src="/public/icons/upload_file.svg" alt="upload file">
-            </button>
-            <button type="submit" class="hidden" id="folderId" name="folderId" value="<%= folder.id %>">folderId</button>
-          </form>
+          <%- include('../file/upload-file-form.ejs', { folderId: folder.id }) %>
           <form action="/folder/<%= folder.id %>/new" method="post">
             <button type="submit" class="button-no-style std-button">
               <img src="/public/icons/create_new_folder.svg" alt="create new folder">
