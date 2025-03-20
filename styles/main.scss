@@ -11,6 +11,7 @@ $desktop-breakpoint: 460px;
   --off-black: #222222;
   --shadow: #22222211;
   --main-text-color: var(var(--off-black));
+  --std-border-radius: 5px;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   color: var(--main-text-color);
 }
