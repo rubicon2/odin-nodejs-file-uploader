@@ -9,10 +9,15 @@
       <% } else { %>
         <a href="/">Back to root directory</a>
       <% }; %>
-      <h1><%= file.name %></h1>
+      <header class="flex-h flex-between">
+        <h1><%= file.name %></h1>
+        <a href="/file/<%= file.id %>/download">
+          <img src="/public/icons/download.svg" alt="download file <%= file.name %>">
+        </a>
+      </header>
       <h2>Created at: <%= file.createdAt %></h2>
       <h2>Size: <%= Math.round(file.size / 1000) %> kb</h2>
-      <a href="/file/<%= file.id %>/download">Download</a>
+      
     </main>
   </body>
 </html>
