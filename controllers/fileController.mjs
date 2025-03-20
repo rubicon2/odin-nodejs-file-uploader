@@ -122,7 +122,7 @@ async function renameFile(req, res, next) {
     }
 
     // Otherwise, we are ok to update to the new name.
-    await prisma.file.update({
+    const file = await prisma.file.update({
       where: {
         id: fileId,
       },
@@ -130,7 +130,12 @@ async function renameFile(req, res, next) {
         name,
       },
     });
-    res.redirect(`/file/${fileId}`);
+
+    if (file.folderId) {
+      res.redirect(`/folder/${file.folderId}`);
+    } else {
+      res.redirect('/');
+    }
   } catch (error) {
     return next(error);
   }
