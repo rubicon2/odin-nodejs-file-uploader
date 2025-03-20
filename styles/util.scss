@@ -27,3 +27,8 @@
   justify-content: space-between;
   align-items: center;
 }
+
+// This is for stylistic stuff that has no bearing on content unlike <strong> tag.
+.bold {
+  font-weight: 700;
+}
