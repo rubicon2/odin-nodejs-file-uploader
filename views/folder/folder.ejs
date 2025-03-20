@@ -3,7 +3,7 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <main class="container">
+    <main class="container std-padding-v">
       <% if (folder.parentId) { %>
         <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
       <% } else { %>
