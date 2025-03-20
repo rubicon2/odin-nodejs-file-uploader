@@ -12,6 +12,7 @@ $desktop-breakpoint: 460px;
   --shadow: #22222211;
   --main-text-color: var(var(--off-black));
   --std-border-radius: 5px;
+  --std-padding: 1rem;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   color: var(--main-text-color);
 }
@@ -21,6 +22,15 @@ $desktop-breakpoint: 460px;
   max-width: 960px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+.std-padding-v {
+  padding-top: var(--std-padding);
+  padding-bottom: var(--std-padding);
+}
+
+.std-padding-bottom {
+  padding-bottom: var(--std-padding);
 }
 
 // Styles for specific components.
