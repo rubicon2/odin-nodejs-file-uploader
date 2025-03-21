@@ -2,12 +2,10 @@
   <div class="flex-h flex-between">
     <div>
       <h1 class="header__title"><%= title %></h1>
-        <% if (locals.folder) { %>
-          <% if (folder.parentId) { %>
-            <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
-          <% } else { %>
-            <a href="/">Back to root directory</a>
-          <% }; %>
+        <% if (folder.parentId) { %>
+          <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
+        <% } else if (!isRoot) { %>
+          <a href="/">Back to root directory</a>
         <% } else { %>
           <a href="/" class="visibility-none">Here to keep the spacing consistent!</a>
         <% }; %>

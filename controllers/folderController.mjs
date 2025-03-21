@@ -22,7 +22,12 @@ async function getFolder(req, res, next) {
       },
     });
     if (!folder) throw new Error('Folder not found');
-    res.render('folder/folder', { title: folder.name, user: req.user, folder });
+    res.render('folder/folder', {
+      title: folder.name,
+      user: req.user,
+      isRoot: false,
+      folder,
+    });
   } catch (error) {
     next(error);
   }
