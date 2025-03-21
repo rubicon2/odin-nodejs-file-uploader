@@ -1,0 +1,15 @@
+<header>
+  <div class="flex-h flex-between">
+    <div>
+      <h1 class="header__title"><%= title %></h1>
+        <% if (locals.parentFolder) { %>
+          <a href="<%= `/folder/${parentFolder.id}` %>">Back to <%= parentFolder.name %></a>
+        <% } else { %>
+          <a href="/">Back to root directory</a>
+        <% }; %>
+    </div>
+    <a href="/file/<%= file.id %>/download">
+      <img src="/public/icons/download.svg" alt="download file <%= file.name %>">
+    </a>
+  </div>
+</header>

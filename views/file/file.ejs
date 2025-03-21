@@ -3,26 +3,18 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <main class="container std-padding-v">
-      <% if (parentFolder) { %>
-        <a href="<%= `/folder/${parentFolder.id}` %>">Back to <%= parentFolder.name %></a>
-      <% } else { %>
-        <a href="/">Back to root directory</a>
-      <% }; %>
-      <header class="flex-h flex-between">
-        <h1><%= file.name %></h1>
-        <a href="/file/<%= file.id %>/download">
-          <img src="/public/icons/download.svg" alt="download file <%= file.name %>">
-        </a>
-      </header>
-      <div class="flex-h flex-between">
-        <div class="bold">Created at:</div>
-        <div><%= file.createdAt %></div>
-      </div>
-      <div class="flex-h flex-between">
-        <div class="bold">Size:</div>
-        <div><%= Math.round(file.size / 1000) %> kb</div>
-      </div>
-    </main>
+    <div class="container std-padding-v">
+      <%- include('file-header.ejs') %>
+      <main class="std-padding-top">
+        <div class="flex-h flex-between">
+          <div class="bold">Created at:</div>
+          <div><%= file.createdAt %></div>
+        </div>
+        <div class="flex-h flex-between">
+          <div class="bold">Size:</div>
+          <div><%= Math.round(file.size / 1000) %> kb</div>
+        </div>
+      </main>
+    </div>
   </body>
 </html>
