@@ -115,6 +115,11 @@ $desktop-breakpoint: 460px;
   margin: 0;
 }
 
+.folder-header {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+}
+
 @media screen and (min-width: $desktop-breakpoint) {
   .main-nav {
     flex-direction: row;
