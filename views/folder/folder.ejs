@@ -4,8 +4,8 @@
   <body>
     <%- include('../partials/nav.ejs') %>
     <main class="container">
-      <%- include('../partials/directory-header.ejs') %>
-      <%- include('../partials/directory-list.ejs', { folders: folder.children, files: folder.files }) %>
+      <%- include('../directory-list/directory-header.ejs') %>
+      <%- include('../directory-list/directory-list.ejs', { folders: folder.children, files: folder.files }) %>
     </main>
   </body>
 </html>

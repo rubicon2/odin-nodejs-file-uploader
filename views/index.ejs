@@ -5,8 +5,8 @@
     <%- include('partials/nav.ejs') %>
     <main class="container">
       <% if (locals.user) { %>
-        <%- include('partials/directory-header.ejs') %>
-        <%- include('partials/directory-list.ejs') %>
+        <%- include('directory-list/directory-header.ejs') %>
+        <%- include('directory-list/directory-list.ejs') %>
         <% } else { %>
           <h1>Welcome!</h1>
           <p>Sign up or log in to start uploading files!</p>
