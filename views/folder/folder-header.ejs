@@ -11,8 +11,8 @@
         <% }; %>
     </div>
     <div class="flex-h">
-      <%- include('../file/upload-file-form.ejs', { folderId: (locals.folder) ? folder.id : null }) %>
-      <form action="<%= (locals.folder) ? `/folder/${folder.id}/new` : '/folder/new' %>" method="post">
+      <%- include('../file/upload-file-form.ejs', { folderId: (!isRoot) ? folder.id : null }) %>
+      <form action="<%= (!isRoot) ? `/folder/${folder.id}/new` : '/folder/new' %>" method="post">
         <button type="submit" class="button-no-style std-button block">
           <img src="/public/icons/create_new_folder.svg" alt="create new folder">
         </button>
