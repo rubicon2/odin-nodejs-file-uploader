@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --watch app.mjs",
     "sass": "npx sass --watch styles/main.scss public/style.css",
+    "build": "npx sass styles/main.scss public/style.css",
     "start": "node app.mjs"
   },
   "keywords": [],
