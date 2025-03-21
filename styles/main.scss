@@ -107,6 +107,10 @@ $desktop-breakpoint: 460px;
   width: 100px;
 }
 
+.header__title {
+  margin-bottom: 0;
+}
+
 @media screen and (min-width: $desktop-breakpoint) {
   .main-nav {
     flex-direction: row;
