@@ -12,7 +12,7 @@
           <a href="/" class="visibility-none">Here to keep the spacing consistent!</a>
         <% }; %>
     </div>
-    <div class="folder__buttons flex-h">
+    <div class="flex-h">
       <%- include('../file/upload-file-form.ejs', { folderId: (locals.folder) ? folder.id : null }) %>
       <form action="<%= (locals.folder) ? `/folder/${folder.id}/new` : '/folder/new' %>" method="post">
         <button type="submit" class="button-no-style std-button block">
