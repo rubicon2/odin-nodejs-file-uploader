@@ -7,14 +7,14 @@
       <form action="/account/log-in" method="post">
         <label>
           Email:
-          <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" />
+          <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" required />
           <div id="form-error--email">
             <%= locals.errors?.email ? errors.email : '' %>
           </div>
         </label>
         <label>
           Password:
-          <input type="password" name="password" autocomplete="current-password" value="<%= locals.formData?.password ? formData.password : '' %>" />
+          <input type="password" name="password" autocomplete="current-password" value="<%= locals.formData?.password ? formData.password : '' %>" required />
           <div id="form-error--password">
             <%= locals.errors?.password ? errors.password : '' %>
           </div>
