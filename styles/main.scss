@@ -9,6 +9,8 @@ $desktop-breakpoint: 460px;
   --off-white: #eeeeee;
   --grey: #aaaaaa55;
   --off-black: #222222;
+  --error: #cc2222;
+  --error-transparent: #cc222244;
   --shadow: #22222211;
   --main-text-color: var(--off-black);
   --std-border-radius: 5px;
@@ -41,6 +43,18 @@ $desktop-breakpoint: 460px;
   max-width: 480px;
 }
 
+.invalid-input {
+  background-color: var(--error-transparent);
+}
+
+.invalid-input__icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding: 2px;
+}
+
 .form-row {
   display: grid;
   // For spacing out form rows without just making the form a grid, which introduces other problems to solve.
@@ -49,6 +63,13 @@ $desktop-breakpoint: 460px;
   input {
     width: 100%;
   }
+}
+
+.form-error {
+  color: var(--error);
+  font-size: 0.9rem;
+  text-align: right;
+  grid-column: -1 / 1;
 }
 
 // Styles for specific components.
@@ -141,6 +162,6 @@ $desktop-breakpoint: 460px;
 
   .form-row {
     grid-template-columns: 1fr 1fr;
-    gap: var(--std-padding);
+    gap: 0 var(--std-padding);
   }
 }
