@@ -37,6 +37,20 @@ $desktop-breakpoint: 460px;
   padding-bottom: var(--std-padding);
 }
 
+.std-form {
+  max-width: 480px;
+}
+
+.form-row {
+  display: grid;
+  // For spacing out form rows without just making the form a grid, which introduces other problems to solve.
+  margin-bottom: 0.2rem;
+
+  input {
+    width: 100%;
+  }
+}
+
 // Styles for specific components.
 .main-nav-background {
   background-color: var(--main-color);
@@ -123,5 +137,10 @@ $desktop-breakpoint: 460px;
 @media screen and (min-width: $desktop-breakpoint) {
   .main-nav {
     flex-direction: row;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--std-padding);
   }
 }

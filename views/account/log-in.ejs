@@ -5,19 +5,23 @@
     <%- include('../partials/nav.ejs') %>
     <main class="container">
       <h1>Log In</h1>
-      <form action="/account/log-in" method="post">
-        <label>
+      <form action="/account/log-in" method="post" class="std-form">
+        <label class="form-row">
           Email:
-          <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" required />
-          <div id="form-error--email">
-            <%= locals.errors?.email ? errors.email : '' %>
+          <div>
+            <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" required />
+            <div class="form-error" id="form-error--email">
+              <%= locals.errors?.email ? errors.email : 'dummy' %>
+            </div>
           </div>
         </label>
-        <label>
+        <label class="form-row">
           Password:
-          <input type="password" name="password" autocomplete="current-password" value="<%= locals.formData?.password ? formData.password : '' %>" required />
-          <div id="form-error--password">
-            <%= locals.errors?.password ? errors.password : '' %>
+          <div>
+            <input type="password" name="password" autocomplete="current-password" value="<%= locals.formData?.password ? formData.password : '' %>" required />
+            <div class="form-error" id="form-error--password">
+              <%= locals.errors?.password ? errors.password : 'dummy' %>
+            </div>
           </div>
         </label>
         <button type="submit">Log In</button>
