@@ -4,14 +4,14 @@
   <body>
     <%- include('../partials/nav.ejs') %>
     <main class="container">
-      <% if (folder.parentId) { %>
-        <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
-      <% } else { %>
-        <a href="/">Back to root directory</a>
-      <% }; %>
-      <h1>
-        Rename Folder
-      </h1>
+      <header class="std-padding-v">
+        <h1 class="header__title">Rename Folder</h1>
+        <% if (folder.parentId) { %>
+          <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
+        <% } else { %>
+          <a href="/">Back to root directory</a>
+        <% }; %>
+      </header>
       <%- include('update-folder-form.ejs') %>
     </main>
   </body>

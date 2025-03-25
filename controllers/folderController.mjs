@@ -35,6 +35,7 @@ async function getFolder(req, res, next) {
 
 async function getUpdateFolder(req, res, next) {
   try {
+    const formData = req.session?.formData;
     const folder = await prisma.folder.findUnique({
       where: {
         id: req.params.folderId,
@@ -45,7 +46,13 @@ async function getUpdateFolder(req, res, next) {
       },
     });
     if (!folder) throw new Error('Folder not found');
-    res.render('folder/update', { title: folder.name, user: req.user, folder });
+    res.render('folder/update', {
+      title: folder.name,
+      user: req.user,
+      folder,
+      formData,
+      errors: req.session?.errors,
+    });
   } catch (error) {
     return next(error);
   }
@@ -89,7 +96,37 @@ async function postNewFolder(req, res, next) {
 
 async function postUpdateFolder(req, res, next) {
   try {
-    const folder = await prisma.folder.update({
+    const { folderId } = req.params;
+    const { name } = req.body;
+
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: folderId,
+      },
+      include: {
+        parent: true,
+      },
+    });
+
+    // Stop renaming a folder to one that already exists in the parent folder.
+    const existingFolderWithName = await prisma.folder.findFirst({
+      where: {
+        parentId: folder.parentId,
+        name,
+      },
+    });
+
+    if (existingFolderWithName) {
+      req.session.errors = {
+        name: `A folder with that name already exists in ${folder.parent?.name || 'the root directory'}`,
+      };
+      return req.session.save((error) => {
+        if (error) next(error);
+        return res.redirect(`/folder/${folderId}/update`);
+      });
+    }
+
+    await prisma.folder.update({
       where: {
         id: req.params.folderId,
       },
