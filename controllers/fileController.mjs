@@ -119,19 +119,11 @@ async function renameFile(req, res, next) {
     });
     const existingFileWithName = await prisma.file.findFirst({
       where: {
-        AND: [
-          {
-            name,
-          },
-          {
-            id: {
-              not: fileId,
-            },
-          },
-          {
-            folderId: file.folderId,
-          },
-        ],
+        id: {
+          not: fileId,
+        },
+        name,
+        folderId: file.folderId,
       },
     });
 
