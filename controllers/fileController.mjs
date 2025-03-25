@@ -31,6 +31,7 @@ async function getFile(req, res, next) {
 
 async function getUpdateFile(req, res, next) {
   try {
+    const formData = req.session?.formData;
     const file = await prisma.file.findUnique({
       where: {
         id: req.params.fileId,
@@ -41,7 +42,13 @@ async function getUpdateFile(req, res, next) {
       },
     });
     if (!file) throw new Error('File not found');
-    res.render('file/update', { title: file.name, user: req.user, file });
+    res.render('file/update', {
+      title: file.name,
+      user: req.user,
+      file,
+      formData,
+      errors: req.session.errors,
+    });
   } catch (error) {
     return next(error);
   }
@@ -118,7 +125,13 @@ async function renameFile(req, res, next) {
     });
 
     if (existingFileWithName) {
-      throw new Error('A file with that name already exists in this folder');
+      req.session.errors = {
+        name: 'A file with that name already exists in this folder',
+      };
+      return req.session.save((error) => {
+        if (error) next(error);
+        return res.redirect(`/file/${fileId}/update`);
+      });
     }
 
     // Otherwise, we are ok to update to the new name.

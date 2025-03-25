@@ -2,7 +2,7 @@
   <label class="form-row">
     Name:
     <div class="relative">
-      <input type="text" name="name" value="<%= file.name %>" required>
+      <input type="text" name="name" value="<%= locals?.formData?.name || file.name %>" required class="<%= (locals.errors?.name) ? 'invalid-input' : '' %>">
       <img src="/public/icons/error_36.svg" alt="email input error" class="<%= (locals.errors?.name) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
     </div>
     <div class="<%= (locals.errors?.name) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--name">
