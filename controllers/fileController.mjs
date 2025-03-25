@@ -24,6 +24,7 @@ async function getFile(req, res, next) {
       file,
       parentFolder,
     });
+    res.on('finish', next);
   } catch (error) {
     next(error);
   }
@@ -49,6 +50,7 @@ async function getUpdateFile(req, res, next) {
       formData,
       errors: req.session.errors,
     });
+    res.on('finish', next);
   } catch (error) {
     return next(error);
   }

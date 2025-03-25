@@ -5,7 +5,12 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/:folderId', isAuth, folderController.getFolder);
+router.get(
+  '/:folderId',
+  isAuth,
+  folderController.getFolder,
+  routeData.clearRouteData,
+);
 router.get(
   '/:folderId/update',
   isAuth,

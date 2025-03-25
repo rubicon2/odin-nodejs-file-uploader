@@ -1,3 +1,5 @@
+import prisma from '../db/prisma.mjs';
+
 function storeFormData(req, res, next) {
   req.session.formData = { ...req.body };
   next();
@@ -24,13 +26,11 @@ function storePassportErrors(req, res, next) {
   });
 }
 
-function clearRouteData(req, res, next) {
+async function clearRouteData(req, res, next) {
   delete req.session.formData;
   delete req.session.errors;
   req.session.save((error) => {
-    if (error) next(error);
-    // Clear route data should come after the response has been sent and the last in the middleware chain.
-    res.end();
+    if (error) return next(error);
   });
 }
 

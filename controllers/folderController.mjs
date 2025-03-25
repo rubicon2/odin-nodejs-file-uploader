@@ -28,6 +28,8 @@ async function getFolder(req, res, next) {
       isRoot: false,
       folder,
     });
+    // Clear route data once the response has been sent.
+    res.on('finish', next);
   } catch (error) {
     next(error);
   }
@@ -53,6 +55,8 @@ async function getUpdateFolder(req, res, next) {
       formData,
       errors: req.session?.errors,
     });
+    // Only clear the routeData once the response has been sent.
+    res.on('finish', next);
   } catch (error) {
     return next(error);
   }
@@ -116,27 +120,33 @@ async function postUpdateFolder(req, res, next) {
       },
     });
 
+    // There is a problem with req.session keeping route data after it should have been cleared,
+    // then it clears after a few refreshes... sometimes. It appears to be due to time passing, not the refreshes themselves.
+    // So it is probably a problem with the req.session.save() callback function - something getting thrown out of sync.
+    // Or getting redirected or something before the data has been saved or cleared???
     if (existingFolderWithName) {
       req.session.errors = {
         name: `A folder with that name already exists in ${folder.parent?.name || 'the root directory'}`,
       };
-      return req.session.save((error) => {
-        if (error) next(error);
-        return res.redirect(`/folder/${folderId}/update`);
+    } else {
+      delete req.session.errors;
+      await prisma.folder.update({
+        where: {
+          id: req.params.folderId,
+        },
+        data: {
+          name: req.body.name,
+        },
       });
     }
 
-    await prisma.folder.update({
-      where: {
-        id: req.params.folderId,
-      },
-      data: {
-        name: req.body.name,
-      },
+    req.session.save((error) => {
+      if (error) return next(error);
+      if (existingFolderWithName)
+        return res.redirect(`/folder/${folderId}/update`);
+      if (folder.parentId) return res.redirect(`/folder/${folder.parentId}`);
+      return res.redirect('/');
     });
-
-    if (folder.parentId) res.redirect(`/folder/${folder.parentId}`);
-    else res.redirect('/');
   } catch (error) {
     next(error);
   }
