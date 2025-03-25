@@ -113,6 +113,9 @@ async function renameFile(req, res, next) {
       where: {
         id: fileId,
       },
+      include: {
+        folder: true,
+      },
     });
     const existingFileWithName = await prisma.file.findFirst({
       where: {
@@ -134,7 +137,7 @@ async function renameFile(req, res, next) {
 
     if (existingFileWithName) {
       req.session.errors = {
-        name: 'A file with that name already exists in this folder',
+        name: `A file with that name already exists in ${file.folder?.name || 'the root directory'}`,
       };
       return req.session.save((error) => {
         if (error) next(error);
