@@ -109,6 +109,11 @@ async function renameFile(req, res, next) {
     const { fileId } = req.params;
     const { name } = req.body;
     // Make sure no file in this folder already has that name.
+    const file = await prisma.file.findUnique({
+      where: {
+        id: fileId,
+      },
+    });
     const existingFileWithName = await prisma.file.findFirst({
       where: {
         AND: [
@@ -119,6 +124,9 @@ async function renameFile(req, res, next) {
             id: {
               not: fileId,
             },
+          },
+          {
+            folderId: file.folderId,
           },
         ],
       },
@@ -135,7 +143,7 @@ async function renameFile(req, res, next) {
     }
 
     // Otherwise, we are ok to update to the new name.
-    const file = await prisma.file.update({
+    await prisma.file.update({
       where: {
         id: fileId,
       },
