@@ -127,16 +127,14 @@ async function postUpdateFolder(req, res, next) {
       },
     });
 
-    // There is a problem with req.session keeping route data after it should have been cleared,
-    // then it clears after a few refreshes... sometimes. It appears to be due to time passing, not the refreshes themselves.
-    // So it is probably a problem with the req.session.save() callback function - something getting thrown out of sync.
-    // Or getting redirected or something before the data has been saved or cleared???
     if (existingFolderWithName) {
       req.session.errors = {
         name: `A folder with that name already exists in ${folder.parent?.name || 'the root directory'}`,
       };
     } else {
+      // Upon success, we will not redirect to folder/update route which clears the formData, so do it now.
       delete req.session.errors;
+      delete req.session.formData;
       await prisma.folder.update({
         where: {
           id: req.params.folderId,
