@@ -38,6 +38,8 @@ async function getFolder(req, res, next) {
 async function getUpdateFolder(req, res, next) {
   try {
     const formData = req.session?.formData;
+    const errors = req.session?.errors;
+
     const folder = await prisma.folder.findUnique({
       where: {
         id: req.params.folderId,
@@ -47,13 +49,15 @@ async function getUpdateFolder(req, res, next) {
         parent: true,
       },
     });
+
     if (!folder) throw new Error('Folder not found');
+
     res.render('folder/update', {
       title: folder.name,
       user: req.user,
       folder,
       formData,
-      errors: req.session?.errors,
+      errors,
     });
     // Only clear the routeData once the response has been sent.
     res.on('finish', next);
