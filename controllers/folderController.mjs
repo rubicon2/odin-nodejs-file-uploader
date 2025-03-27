@@ -119,6 +119,9 @@ async function postUpdateFolder(req, res, next) {
     // Stop renaming a folder to one that already exists in the parent folder.
     const existingFolderWithName = await prisma.folder.findFirst({
       where: {
+        id: {
+          not: folderId,
+        },
         parentId: folder.parentId,
         name,
       },
