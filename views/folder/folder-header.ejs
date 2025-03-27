@@ -1,0 +1,22 @@
+<header class="std-padding-v">
+  <div class="folder-header">
+    <div>
+      <h1 class="header__title"><%= title %></h1>
+        <% if (folder.parentId) { %>
+          <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
+        <% } else if (!isRoot) { %>
+          <a href="/">Back to root directory</a>
+        <% } else { %>
+          <a href="/" class="visibility-none">Folder Name</a>
+        <% }; %>
+    </div>
+    <div class="flex-h">
+      <%- include('../file/upload-file-form.ejs', { folderId: (!isRoot) ? folder.id : null }) %>
+      <form action="<%= (!isRoot) ? `/folder/${folder.id}/new` : '/folder/new' %>" method="post">
+        <button type="submit" class="button-no-style std-button block">
+          <img src="/public/icons/create_new_folder.svg" alt="create new folder">
+        </button>
+      </form>
+    </div>
+  </div>
+</header>

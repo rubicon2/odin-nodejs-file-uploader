@@ -3,24 +3,41 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <h1>Sign Up</h1>
-    <form action="/sign-up" method="post">
-      <label>
-        Email:
-        <input type="email" name="email" required value="<%= locals.formData?.email ? formData.email : '' %>"/>
-        <div id="form-error--email"><%= locals.errors?.email ? errors.email : '' %></div>
-      </label>
-      <label>
-        Password:
-        <input type="password" name="password" required value="<%= locals.formData?.password ? formData.password : '' %>"/>
-        <div id="form-error--password"><%= locals.errors?.password ? errors.password : '' %></div>
-      </label>
-      <label>
-        Confirm password:
-        <input type="password" name="confirm_password" value="<%= locals.formData?.confirm_password ? formData.confirm_password : '' %>"/>
-        <div id="form-error--confirm-password"><%= locals.errors?.confirm_password ? errors.confirm_password : '' %></div>
-      </label>
-      <button type="submit">Sign Up</button>
-    </form>
+    <main class="container">
+      <h1>Sign Up</h1>
+      <form action="/sign-up" method="post" class="std-form">
+        <label class="form-row">
+          Email:
+          <div class="relative">
+            <input type="email" name="email" required value="<%= locals.formData?.email ? formData.email : '' %>" class="<%= (locals.errors?.email) ? 'invalid-input' : '' %>" />
+            <img src="/public/icons/error_36.svg" alt="email input error" class="<%= (locals.errors?.email) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
+          </div>
+          <div class="<%= (locals.errors?.email) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--email">
+            <%= locals.errors?.email ? errors.email : 'no errors' %>
+          </div>
+        </label>
+        <label class="form-row">
+          Password:
+          <div class="relative">
+            <input type="password" name="password" required value="<%= locals.formData?.password ? formData.password : '' %>" class="<%= (locals.errors?.password) ? 'invalid-input' : '' %>"/>
+            <img src="/public/icons/error_36.svg" alt="password input error" class="<%= (locals.errors?.password) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
+          </div>
+          <div class="<%= (locals.errors?.password) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--password">
+            <%= locals.errors?.password ? errors.password : 'no errors' %>
+          </div>
+        </label>
+        <label class="form-row">
+          Confirm password:
+          <div class="relative">
+            <input type="password" name="confirm_password" value="<%= locals.formData?.confirm_password ? formData.confirm_password : '' %>" class="<%= (locals.errors?.confirm_password) ? 'invalid-input' : '' %>"/>
+            <img src="/public/icons/error_36.svg" alt="password input error" class="<%= (locals.errors?.password) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
+          </div>
+          <div class="<%= (locals.errors?.confirm_password) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--confirm-password">
+            <%= locals.errors?.confirm_password ? errors.confirm_password : 'no errors' %>
+          </div>
+        </label>
+        <button type="submit">Sign Up</button>
+      </form>
+    </main>
   </body>
 </html>

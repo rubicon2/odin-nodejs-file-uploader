@@ -24,8 +24,35 @@ async function getFile(req, res, next) {
       file,
       parentFolder,
     });
+    res.on('finish', next);
   } catch (error) {
     next(error);
+  }
+}
+
+async function getUpdateFile(req, res, next) {
+  try {
+    const formData = req.session?.formData;
+    const file = await prisma.file.findUnique({
+      where: {
+        id: req.params.fileId,
+        ownerId: req.user.id,
+      },
+      include: {
+        folder: true,
+      },
+    });
+    if (!file) throw new Error('File not found');
+    res.render('file/update', {
+      title: file.name,
+      user: req.user,
+      file,
+      formData,
+      errors: req.session.errors,
+    });
+    res.on('finish', next);
+  } catch (error) {
+    return next(error);
   }
 }
 
@@ -83,36 +110,51 @@ async function renameFile(req, res, next) {
   try {
     const { fileId } = req.params;
     const { name } = req.body;
+
     // Make sure no file in this folder already has that name.
+    const file = await prisma.file.findUnique({
+      where: {
+        id: fileId,
+      },
+      include: {
+        folder: true,
+      },
+    });
+
     const existingFileWithName = await prisma.file.findFirst({
       where: {
-        AND: [
-          {
-            name,
-          },
-          {
-            id: {
-              not: fileId,
-            },
-          },
-        ],
+        id: {
+          not: fileId,
+        },
+        name,
+        folderId: file.folderId,
       },
     });
 
     if (existingFileWithName) {
-      throw new Error('A file with that name already exists in this folder');
+      req.session.errors = {
+        name: `A file with that name already exists in ${file.folder?.name || 'the root directory'}`,
+      };
+    } else {
+      // Upon success, we will not redirect to folder/update route which clears the route data, so do it now.
+      delete req.session.errors;
+      delete req.session.formData;
+      await prisma.file.update({
+        where: {
+          id: fileId,
+        },
+        data: {
+          name,
+        },
+      });
     }
 
-    // Otherwise, we are ok to update to the new name.
-    await prisma.file.update({
-      where: {
-        id: fileId,
-      },
-      data: {
-        name,
-      },
+    req.session.save((error) => {
+      if (error) next(error);
+      if (existingFileWithName) return res.redirect(`/file/${fileId}/update`);
+      if (file.folderId) return res.redirect(`/folder/${file.folderId}`);
+      return res.redirect('/');
     });
-    res.redirect(`/file/${fileId}`);
   } catch (error) {
     return next(error);
   }
@@ -135,4 +177,11 @@ async function deleteFile(req, res, next) {
   }
 }
 
-export { getFile, downloadFile, postFile, renameFile, deleteFile };
+export {
+  getFile,
+  getUpdateFile,
+  downloadFile,
+  postFile,
+  renameFile,
+  deleteFile,
+};

@@ -1,0 +1,50 @@
+.list-no-style {
+  list-style: none;
+  padding: 0;
+}
+
+.link-no-style {
+  text-decoration: none;
+  color: var(--main-text-color);
+}
+
+.button-no-style {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.flex-h {
+  display: flex;
+}
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-between {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.visibility-none {
+  visibility: hidden;
+}
+
+.block {
+  display: block;
+}
+
+.relative {
+  position: relative;
+}
+
+// This is for stylistic stuff that has no bearing on content unlike <strong> tag.
+.bold {
+  font-weight: 700;
+}

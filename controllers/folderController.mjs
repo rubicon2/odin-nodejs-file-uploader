@@ -9,24 +9,86 @@ async function getFolder(req, res, next) {
       },
       include: {
         parent: true,
-        children: true,
-        files: true,
+        children: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
+        files: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
       },
     });
     if (!folder) throw new Error('Folder not found');
-    res.render('folder/folder', { title: folder.name, user: req.user, folder });
+    res.render('folder/folder', {
+      title: folder.name,
+      user: req.user,
+      isRoot: false,
+      folder,
+    });
+    // Clear route data once the response has been sent.
+    res.on('finish', next);
   } catch (error) {
     next(error);
   }
 }
 
+async function getUpdateFolder(req, res, next) {
+  try {
+    const formData = req.session?.formData;
+    const errors = req.session?.errors;
+
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: req.params.folderId,
+        ownerId: req.user.id,
+      },
+      include: {
+        parent: true,
+      },
+    });
+
+    if (!folder) throw new Error('Folder not found');
+
+    res.render('folder/update', {
+      title: folder.name,
+      user: req.user,
+      folder,
+      formData,
+      errors,
+    });
+    // Only clear the routeData once the response has been sent.
+    res.on('finish', next);
+  } catch (error) {
+    return next(error);
+  }
+}
+
 async function postNewFolder(req, res, next) {
   try {
+    let name = req?.body?.name || 'New Folder';
+    const ownerId = req.user.id;
     const parentId = req?.params?.folderId || null;
+
+    // Check this name has not already been used by an existing folder.
+    const existingFolderWithName = await prisma.folder.findFirst({
+      where: {
+        name,
+        ownerId,
+        parentId,
+      },
+    });
+
+    if (existingFolderWithName)
+      throw new Error('A folder with that name already exists');
+
+    // If that name has not already been taken, create the new folder.
     await prisma.folder.create({
       data: {
-        name: req.body.name,
-        ownerId: req.user.id,
+        name,
+        ownerId,
         parentId,
       },
     });
@@ -42,15 +104,54 @@ async function postNewFolder(req, res, next) {
 
 async function postUpdateFolder(req, res, next) {
   try {
-    await prisma.folder.update({
+    const { folderId } = req.params;
+    const { name } = req.body;
+
+    const folder = await prisma.folder.findUnique({
       where: {
-        id: req.params.folderId,
+        id: folderId,
       },
-      data: {
-        name: req.body.name,
+      include: {
+        parent: true,
       },
     });
-    res.redirect(`/folder/${req.params.folderId}`);
+
+    // Stop renaming a folder to one that already exists in the parent folder.
+    const existingFolderWithName = await prisma.folder.findFirst({
+      where: {
+        id: {
+          not: folderId,
+        },
+        parentId: folder.parentId,
+        name,
+      },
+    });
+
+    if (existingFolderWithName) {
+      req.session.errors = {
+        name: `A folder with that name already exists in ${folder.parent?.name || 'the root directory'}`,
+      };
+    } else {
+      // Upon success, we will not redirect to folder/update route which clears the formData, so do it now.
+      delete req.session.errors;
+      delete req.session.formData;
+      await prisma.folder.update({
+        where: {
+          id: req.params.folderId,
+        },
+        data: {
+          name: req.body.name,
+        },
+      });
+    }
+
+    req.session.save((error) => {
+      if (error) return next(error);
+      if (existingFolderWithName)
+        return res.redirect(`/folder/${folderId}/update`);
+      if (folder.parentId) return res.redirect(`/folder/${folder.parentId}`);
+      return res.redirect('/');
+    });
   } catch (error) {
     next(error);
   }
@@ -81,4 +182,10 @@ async function postDeleteFolder(req, res, next) {
   }
 }
 
-export { getFolder, postNewFolder, postUpdateFolder, postDeleteFolder };
+export {
+  getFolder,
+  getUpdateFolder,
+  postNewFolder,
+  postUpdateFolder,
+  postDeleteFolder,
+};

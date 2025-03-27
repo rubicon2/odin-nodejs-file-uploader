@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <main class="container">
+      <header class="std-padding-v">
+        <h1 class="header__title">Rename Folder</h1>
+        <% if (folder.parentId) { %>
+          <a href="<%= `/folder/${folder.parentId}` %>">Back to <%= folder.parent.name %></a>
+        <% } else { %>
+          <a href="/">Back to root directory</a>
+        <% }; %>
+      </header>
+      <%- include('update-folder-form.ejs') %>
+    </main>
+  </body>
+</html>

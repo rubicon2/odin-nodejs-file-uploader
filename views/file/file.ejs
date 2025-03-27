@@ -3,16 +3,18 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <% if (parentFolder) { %>
-      <a href="<%= `/folder/${parentFolder.id}` %>">Back to <%= parentFolder.name %></a>
-    <% } else { %>
-      <a href="/">Back to root directory</a>
-    <% }; %>
-    <h1><%= file.name %></h1>
-    <%- include('update-file-form.ejs') %>
-    <h2>Created at: <%= file.createdAt %></h2>
-    <h2>Size: <%= Math.round(file.size / 1000) %> kb</h2>
-    <a href="/file/<%= file.id %>/download">Download</a>
-    <%- include('delete-file-form.ejs') %>
+    <div class="container">
+      <%- include('file-header.ejs') %>
+      <main>
+        <div class="flex-h flex-between">
+          <div class="bold">Created at:</div>
+          <div><%= file.createdAt %></div>
+        </div>
+        <div class="flex-h flex-between">
+          <div class="bold">Size:</div>
+          <div><%= Math.round(file.size / 1000) %> kb</div>
+        </div>
+      </main>
+    </div>
   </body>
 </html>

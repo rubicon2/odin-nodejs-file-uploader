@@ -3,23 +3,31 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <%- include('../partials/nav.ejs') %>
-    <h1>Log In</h1>
-      <form action="/account/log-in" method="post">
-        <label>
+    <main class="container">
+      <h1>Log In</h1>
+      <form action="/account/log-in" method="post" class="std-form">
+        <label class="form-row">
           Email:
-          <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" required />
-          <div id="form-error--email">
-            <%= locals.errors?.email ? errors.email : '' %>
+          <div class="relative">
+            <input type="email" name="email" autocomplete="email" value="<%= locals.formData?.email ? formData.email : '' %>" required class="<%= (locals.errors?.email) ? 'invalid-input' : '' %>" />
+            <img src="/public/icons/error_36.svg" alt="email input error" class="<%= (locals.errors?.email) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
+          </div>
+          <div class="<%= (locals.errors?.email) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--email">
+            <%= locals.errors?.email ? errors.email : 'no errors' %>
           </div>
         </label>
-        <label>
+        <label class="form-row">
           Password:
-          <input type="password" name="password" autocomplete="current-password" value="<%= locals.formData?.password ? formData.password : '' %>" required />
-          <div id="form-error--password">
-            <%= locals.errors?.password ? errors.password : '' %>
+          <div class="relative">
+            <input type="password" name="password" autocomplete="current-password" value="<%= locals.formData?.password ? formData.password : '' %>" required class="<%= (locals.errors?.password) ? 'invalid-input' : '' %>" />
+            <img src="/public/icons/error_36.svg" alt="password input error" class="<%= (locals.errors?.password) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
+          </div>
+          <div class="<%= (locals.errors?.password) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--password">
+            <%= locals.errors?.password ? errors.password : 'no errors' %>
           </div>
         </label>
         <button type="submit">Log In</button>
       </form>
+    </main>
   </body>
 </html>

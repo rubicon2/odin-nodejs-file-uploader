@@ -1,0 +1,23 @@
+<li class="directory-list__item directory-list__file">
+  <div class="directory-list__file__buttons">
+    <a href="/file/<%= file.id %>/download">
+      <button type="button" class="button-no-style block">
+        <img src="/public/icons/download_36.svg" alt="download file <%= file.name %>">
+      </button>
+    </a>
+    <a href="/file/<%= file.id %>/update">
+      <button type="button" class="button-no-style block">
+        <img src="/public/icons/edit_square_36.svg" alt="rename file <%= file.name %>">
+      </button>
+    </a>
+    <form action="/file/<%= file.id %>/delete" method="post">
+      <button type="submit" class="button-no-style block">
+        <img src="/public/icons/delete_36.svg" alt="delete file <%= file.name %>" srcset="">
+      </button>
+    </form>
+  </div>
+  <a href="/file/<%= file.id %>" class="link-no-style directory-list__item-icon-container">
+    <img src="/public/icons/docs.svg" alt="" class="directory-list__item-icon">
+    <div class="directory-list__item-name"><%= file.name %></div>
+  </a>
+</li>

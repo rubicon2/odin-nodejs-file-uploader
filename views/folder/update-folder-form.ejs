@@ -1,13 +1,13 @@
-<form action="/file/<%= locals.file ? file.id + '/' : '' %>update" method="post" class="std-form">
+<form action="/folder/<%= locals.folder ? folder.id + '/' : '' %>update" method="post" class="std-form">
   <label class="form-row">
     Name:
     <div class="relative">
-      <input type="text" name="name" value="<%= locals?.formData?.name || file.name %>" required class="<%= (locals.errors?.name) ? 'invalid-input' : '' %>">
+      <input type="text" name="name" value="<%= locals.formData?.name || folder.name %>" required class="<%= (locals.errors?.name) ? 'invalid-input' : '' %>">
       <img src="/public/icons/error_36.svg" alt="email input error" class="<%= (locals.errors?.name) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
     </div>
     <div class="<%= (locals.errors?.name) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--name">
       <%= locals.errors?.name ? errors.name : 'no errors' %>
     </div>
   </label>
-  <button type="submit">Rename File</button>
+  <button type="submit">Rename Folder</button>
 </form>

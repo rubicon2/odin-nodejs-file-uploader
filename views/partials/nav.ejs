@@ -1,19 +1,19 @@
-<nav>
-  <ul>
+<nav class="main-nav-background">
+  <ul class="container list-no-style main-nav">
     <li>
-      <a href="/">Index</a>
+      <a href="/" class="link-no-style nav-link">Index</a>
     </li>
     <% if (!locals.user) { %>
       <li>
-        <a href="/sign-up">Sign Up</a>
+        <a href="/sign-up" class="link-no-style nav-link">Sign Up</a>
       </li>
       <li>
-        <a href="/account/log-in">Log In</a>
+        <a href="/account/log-in" class="link-no-style nav-link">Log In</a>
       </li>
     <% } else { %>
       <li>
         <form action="/account/log-out" method="post">
-          <button type="submit">Log Out</button>
+          <button type="submit" class="button-no-style nav-link">Log Out</button>
         </form>
       </li>
     <% }; %>

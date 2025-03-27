@@ -55,6 +55,9 @@ app.get('/', async (req, res, next) => {
             },
           ],
         },
+        orderBy: {
+          name: 'asc',
+        },
       });
 
       const folderPromise = prisma.folder.findMany({
@@ -71,13 +74,28 @@ app.get('/', async (req, res, next) => {
         include: {
           children: true,
         },
+        orderBy: {
+          name: 'asc',
+        },
       });
 
       files = await filePromise;
       folders = await folderPromise;
     }
 
-    res.render('index', { title: 'Index', user: req.user, files, folders });
+    const root = {
+      title: 'Root',
+      parentId: null,
+      children: folders,
+      files,
+    };
+
+    res.render('folder/folder', {
+      title: 'Root',
+      user: req.user,
+      folder: root,
+      isRoot: true,
+    });
   } catch (error) {
     next(error);
   }
