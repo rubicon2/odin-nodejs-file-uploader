@@ -1,4 +1,9 @@
 import prisma from '../db/prisma.mjs';
+import {
+  deletePublicFile,
+  getPublicFileUrl,
+  uploadPublicFile,
+} from '../db/supabase.mjs';
 
 async function getFile(req, res, next) {
   try {
@@ -66,7 +71,8 @@ async function downloadFile(req, res, next) {
     });
     if (!file) throw new Error('File not found');
     const { url, name } = file;
-    res.download(url, name);
+    const downloadUrl = await getPublicFileUrl(url, name);
+    return res.redirect(downloadUrl);
   } catch (error) {
     next(error);
   }
@@ -90,15 +96,29 @@ async function postFile(req, res, next) {
       );
     }
 
+    // Create unique filename for CDN.
+    const uniquePrefix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const serverFileName = uniquePrefix + '-' + req.file.originalname;
+    const serverPath = req.user.id + '/' + serverFileName;
+
+    const { data, error } = await uploadPublicFile(
+      serverPath,
+      req.file.buffer,
+      req.file.mimetype,
+    );
+
+    if (error) return next(error);
+
     await prisma.file.create({
       data: {
         ownerId: req.user.id,
         folderId,
-        url: req.file.path,
+        url: data.path,
         name: req.file.originalname,
         size: req.file.size,
       },
     });
+
     if (folderId) res.redirect(`/folder/${folderId}`);
     else res.redirect('/');
   } catch (error) {
@@ -162,7 +182,17 @@ async function renameFile(req, res, next) {
 
 async function deleteFile(req, res, next) {
   try {
-    const file = await prisma.file.delete({
+    const file = await prisma.file.findUnique({
+      where: {
+        id: req.params.fileId,
+      },
+    });
+
+    // Delete from CDN before removing entry from database.
+    const { error } = await deletePublicFile(file.url);
+    if (error) throw error;
+
+    await prisma.file.delete({
       where: {
         id: req.params.fileId,
       },

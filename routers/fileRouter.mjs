@@ -6,19 +6,8 @@ import multer from 'multer';
 
 const router = Router();
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, done) => {
-      done(null, 'uploads/');
-    },
-    filename: (req, file, done) => {
-      const uniquePrefix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      // How to get file extension without messing with file names that have dots in?
-      // Just going to append the original name onto the generated name for now.
-      // This name is just for storage. The name the user sees will be stored on the db with this url.
-      // The name of the file downloaded by the user can be determined in the call to res.download()!
-      done(null, uniquePrefix + '-' + file.originalname);
-    },
-  }),
+  // Use memory storage to hold buffer of file to be passed off to CDN.
+  storage: multer.memoryStorage(),
 });
 
 router.get('/:fileId', isAuth, fileController.getFile);
