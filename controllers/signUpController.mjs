@@ -7,12 +7,12 @@ function getSignUp(req, res, next) {
     formData: req.session.formData,
     errors: req.session.errors,
   });
-  next();
+  res.on('finish', next);
 }
 
 function getSuccess(req, res, next) {
   res.render('sign-up/success', { title: 'Sign Up Successful' });
-  next();
+  res.on('finish', next);
 }
 
 async function postSignUp(req, res, next) {

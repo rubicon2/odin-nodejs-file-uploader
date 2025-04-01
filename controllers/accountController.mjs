@@ -5,7 +5,7 @@ function getLogIn(req, res, next) {
     errors: req.session.errors,
   });
   // For clearing route data like formData and errors, after loaded into view.
-  next();
+  res.on('finish', next);
 }
 
 export { getLogIn };
