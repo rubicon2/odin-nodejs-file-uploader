@@ -30,7 +30,7 @@
           Confirm password:
           <div class="relative">
             <input type="password" name="confirm_password" value="<%= locals.formData?.confirm_password ? formData.confirm_password : '' %>" class="<%= (locals.errors?.confirm_password) ? 'invalid-input' : '' %>"/>
-            <img src="/public/icons/error_36.svg" alt="password input error" class="<%= (locals.errors?.password) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
+            <img src="/public/icons/error_36.svg" alt="password input error" class="<%= (locals.errors?.confirm_password) ? 'invalid-input__icon' : 'invalid-input__icon visibility-none' %>">
           </div>
           <div class="<%= (locals.errors?.confirm_password) ? 'form-error' : 'form-error visibility-none' %>" id="form-error--confirm-password">
             <%= locals.errors?.confirm_password ? errors.confirm_password : 'no errors' %>
