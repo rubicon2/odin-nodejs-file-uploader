@@ -1,5 +1,3 @@
-import prisma from '../db/prisma.mjs';
-
 function storeFormData(req, res, next) {
   req.session.formData = { ...req.body };
   next();
@@ -20,18 +18,12 @@ function storePassportErrors(req, res, next) {
   // Store as obj with form paths so can map errors to offending inputs, but also array for convenience, e.g. making a list.
   req.session.errors = { ...obj, array };
   delete req.session.messages;
-  req.session.save((error) => {
-    if (error) next(error);
-    next();
-  });
+  next();
 }
 
-async function clearRouteData(req, res, next) {
+async function clearRouteData(req) {
   delete req.session.formData;
   delete req.session.errors;
-  req.session.save((error) => {
-    if (error) return next(error);
-  });
 }
 
 export { storeFormData, storePassportErrors, clearRouteData };
