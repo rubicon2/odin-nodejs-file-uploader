@@ -36,17 +36,17 @@ In hindsight, this is really what I should have done. Maybe I will have another 
 
 ## To Do
 
-- Learn about JWTs and how to use them
-- Practice WITH RECURSIVE psql queries to hopefully crystallise that knowledge (the syntax is a little weird)
+- Learn about JWTs and how to use them.
+- Practice WITH RECURSIVE psql queries to hopefully crystallise that knowledge (the syntax is a little weird).
 
 ## Stuff That Went Well
 
-- Using BEM (block, element, modifier) naming scheme for CSS classes is unexpectedly great. It was easier to find classes I wanted to modify, and easier to come up with logical names for them too
-- Learning about WITH RECURSIVE postgreSQL queries was interesting - it was the first time I had to use the prisma $rawQuery. It seemed like there was no way to accomplish this with "regular" prisma
+- Using BEM (block, element, modifier) naming scheme for CSS classes is unexpectedly great. It was easier to find classes I wanted to modify, and easier to come up with logical names for them too.
+- Learning about WITH RECURSIVE postgreSQL queries was interesting - it was the first time I had to use the prisma $rawQuery. It seemed like there was no way to accomplish this with "regular" prisma, although after checking out someone else's (very nice) project (https://github.com/ikeyCos/file-uploader/blob/main/db/prisma.js) I found they wrote a smart recursive function that grabs the folder, deletes and files in it from supabase, then for each subfolder calls the same function recursively again until the folder function parameter is null. Smart! Much easier to read and usable than my recursive psql query.
 
 ## Stuff That I Learned The Hard Way
 
-- Add the results of sass compilation (.css and .css.map files) to .gitignore and .prettierignore
-- Getting git to forget about a file that it has been tracking is a big pain so make sure all files we want to ignore are added from the start. Anything that is the result of compilation. Compiling the sass files should be part of the build process
-- Git cherry-picking seems to be more trouble than it is worth, and seemed to introduce lots of merge conflicts (this is either a result of cherry-picking or some other stupid stuff I did, but the only thing I did differently with git this time was try out cherry-picking commits to grab fixes for stuff outside the scope of the feature branch and plop directly onto the main branch)
-- Use res.on('finish', callback) to do stuff after res.send() has been called - do not try to alter req or res by other means like calling next() and moving onto another piece of middleware as that did not work reliably
+- Add the results of sass compilation (.css and .css.map files) to .gitignore and .prettierignore.
+- Getting git to forget about a file that it has been tracking is a big pain so make sure all files we want to ignore are added from the start. Anything that is the result of compilation. Compiling the sass files should be part of the build process.
+- Git cherry-picking seems to be more trouble than it is worth, and seemed to introduce lots of merge conflicts (this is either a result of cherry-picking or some other stupid stuff I did, but the only thing I did differently with git this time was try out cherry-picking commits to grab fixes for stuff outside the scope of the feature branch and plop directly onto the main branch).
+- Use res.on('finish', callback) to do stuff after res.send() has been called - do not try to alter req or res by other means like calling next() and moving onto another piece of middleware as that did not work reliably.
