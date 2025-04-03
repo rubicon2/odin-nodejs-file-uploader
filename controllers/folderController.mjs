@@ -173,12 +173,8 @@ async function postDeleteFolder(req, res, next) {
 
     // Get all files within folder and within any child folders.
     const allFiles = await getAllFilesRecursive(req.params.folderId);
-    // Must do this before deleting the folder, which deletes all child folders and file entries from the db.
-    const deletePromises = [];
-    for (const file of allFiles) {
-      deletePromises.push(deletePublicFile(file.url));
-    }
-    await Promise.all(deletePromises);
+    // Must remove cdn files before deleting the folder, which deletes all child folders and file entries from the db.
+    await Promise.all(allFiles.map((file) => deletePublicFile(file.url)));
 
     // As folderId is a self-relation to the folder table, and is
     // onDelete: Cascade, all the child folders and files will be removed automatically.
