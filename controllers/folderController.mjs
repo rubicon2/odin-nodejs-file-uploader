@@ -1,4 +1,6 @@
 import prisma from '../db/prisma.mjs';
+import { getAllFilesRecursive } from '../db/prismaRaw.mjs';
+import { deletePublicFile } from '../db/supabase.mjs';
 
 async function getFolder(req, res, next) {
   try {
@@ -159,7 +161,7 @@ async function postUpdateFolder(req, res, next) {
 
 async function postDeleteFolder(req, res, next) {
   try {
-    // Redirect to parent folder if there is one.
+    // Get parent if there is one, so we can redirect to it after folder and contents deleted.
     const { parent } = await prisma.folder.findUnique({
       where: {
         id: req.params.folderId,
@@ -169,6 +171,13 @@ async function postDeleteFolder(req, res, next) {
       },
     });
 
+    // Get all files within folder and within any child folders.
+    const allFiles = await getAllFilesRecursive(req.params.folderId);
+    // Must remove cdn files before deleting the folder, which deletes all child folders and file entries from the db.
+    await Promise.all(allFiles.map((file) => deletePublicFile(file.url)));
+
+    // As folderId is a self-relation to the folder table, and is
+    // onDelete: Cascade, all the child folders and files will be removed automatically.
     await prisma.folder.delete({
       where: {
         id: req.params.folderId,
