@@ -21,9 +21,12 @@ function storePassportErrors(req, res, next) {
   next();
 }
 
-async function clearRouteData(req) {
+async function clearRouteData(req, res, next) {
   delete req.session.formData;
   delete req.session.errors;
+  req.session.save((error) => {
+    if (error) return next(error);
+  });
 }
 
 export { storeFormData, storePassportErrors, clearRouteData };
